@@ -43,13 +43,13 @@ import WhoLikedMeModal from "../components/WhoLikedMeModal";
 
 export default function ProfilePage() {
   const navigate = useNavigate();
-  const [name, setName] = useState("Love");
+  const [name, setName] = useState("Jessica Parker");
   const [age, setAge] = useState(25);
-  const [location, setLocation] = useState("Beverly Hills, CA");
-  const [profession, setProfession] = useState("Model & Influencer");
-  const [bio, setBio] = useState("Life is an adventure, let's explore it together! ✨");
+  const [location, setLocation] = useState("Chicago, IL");
+  const [profession, setProfession] = useState("Professional model");
+  const [bio, setBio] = useState("Living life to the fullest, one adventure at a time! ✨");
   const [interests, setInterests] = useState(["Often", "Sociale drinker", "Never", "Pisces"]);
-  const [profileImage, setProfileImage] = useState<string | null>("https://cdn.builder.io/api/v1/image/assets%2Fe142673ab78f4d70a642f0b5825a4793%2F9ca3a7221ed04dfaaa8b4de10c2f495e?format=webp&width=800");
+  const [profileImage, setProfileImage] = useState<string | null>("https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=800");
   const [profileViews, setProfileViews] = useState(247);
   const [loading, setLoading] = useState(true);
   const [uploadingImage, setUploadingImage] = useState(false);
@@ -207,21 +207,21 @@ export default function ProfilePage() {
     <UltraPageTransition>
       <div className={`min-h-screen ${
         isUltraPremium() 
-          ? 'bg-gradient-to-br from-white/95 via-purple-50/90 to-pink-50/90' 
+          ? 'bg-gradient-to-br from-pink-50 via-rose-50 to-pink-100' 
           : 'bg-gradient-to-br from-peach-25 via-cream-50 to-blush-50'
       } pb-20 relative overflow-hidden`}>
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-6 left-6 w-12 h-12 bg-gradient-to-br from-sindoor-300 to-henna-400 opacity-20 animate-pulse"></div>
-        <div className="absolute top-20 right-4 w-10 h-10 bg-gradient-to-br from-royal-300 to-gulmohar-400 opacity-30 animate-bounce"></div>
-        <div className="absolute bottom-32 left-4 w-8 h-8 bg-gradient-to-br from-jasmine-300 to-sindoor-400 opacity-25 animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute bottom-48 right-8 w-6 h-6 bg-gradient-to-br from-passion-400 to-royal-400 opacity-20 animate-bounce" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-6 left-6 w-12 h-12 bg-gradient-to-br from-red-300 to-pink-400 opacity-20 animate-pulse"></div>
+        <div className="absolute top-20 right-4 w-10 h-10 bg-gradient-to-br from-teal-300 to-cyan-400 opacity-30 animate-bounce"></div>
+        <div className="absolute bottom-32 left-4 w-8 h-8 bg-gradient-to-br from-pink-300 to-red-400 opacity-25 animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-48 right-8 w-6 h-6 bg-gradient-to-br from-red-400 to-pink-400 opacity-20 animate-bounce" style={{ animationDelay: '2s' }}></div>
       </div>
 
       {/* Header */}
       <div className={`${
-        isUltraPremium() 
-          ? 'bg-gradient-to-r from-purple-600 via-pink-600 to-purple-700' 
+        <div className="absolute inset-0 bg-gradient-to-r from-white/15 via-pink-100/25 to-white/15 backdrop-blur-sm"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-red-200/15 to-transparent"></div>
           : 'bg-gradient-to-r from-peach-400 via-coral-400 to-blush-500'
       } px-4 py-3 flex items-center justify-between border-b ${
         isUltraPremium() ? 'border-purple-300' : 'border-peach-200'
@@ -248,16 +248,24 @@ export default function ProfilePage() {
         isUltraPremium() ? 'max-w-2xl' : 'max-w-sm'
       } mx-auto px-4 py-6`}>
         {/* Profile Image Section */}
-        <Card className="bg-white/90 backdrop-blur-sm shadow-xl border-0 overflow-hidden mb-6 relative">
+        <Card className={`${
+          isUltraPremium() 
+            ? 'bg-white/95 backdrop-blur-lg shadow-2xl border border-pink-200/50' 
+            : 'bg-white/90 backdrop-blur-sm shadow-xl border-0'
+        } overflow-hidden mb-6 relative rounded-3xl`}>
           <div className="relative h-[50vh] overflow-hidden">
             {profileImage ? (
               <img
                 src={profileImage}
                 alt="Profile"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover rounded-t-3xl"
               />
             ) : (
-              <div className="w-full h-full bg-gradient-to-br from-romance-200 via-passion-200 to-royal-200 flex items-center justify-center">
+              <div className={`w-full h-full ${
+                isUltraPremium() 
+                  ? 'bg-gradient-to-br from-pink-200 via-red-200 to-teal-200' 
+                  : 'bg-gradient-to-br from-romance-200 via-passion-200 to-royal-200'
+              } flex items-center justify-center`}>
                 <div className="text-center text-white">
                   <div className="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center mx-auto mb-4">
                     <span className="text-3xl font-bold">{name.charAt(0)}</span>
@@ -280,25 +288,39 @@ export default function ProfilePage() {
             {/* Camera button */}
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="absolute top-4 right-4 bg-black/20 backdrop-blur-sm p-2 rounded-full hover:bg-black/30 transition-colors"
+              className={`absolute top-4 right-4 ${
+                isUltraPremium() 
+                  ? 'bg-red-500/90 hover:bg-red-600/90' 
+                  : 'bg-black/20 hover:bg-black/30'
+              } backdrop-blur-sm p-3 rounded-full transition-colors shadow-lg`}
               disabled={uploadingImage}
             >
-              <Camera size={18} className="text-white" />
+              <Camera size={20} className="text-white" />
             </button>
 
             {/* Profile Views Badge - Only for Premium Users */}
             {isPremium && (
-              <div className="absolute top-4 left-4 bg-black/20 backdrop-blur-sm px-3 py-1 flex items-center gap-2">
+              <div className={`absolute top-4 left-4 ${
+                isUltraPremium() 
+                  ? 'bg-teal-500/90 backdrop-blur-lg' 
+                  : 'bg-black/20 backdrop-blur-sm'
+              } px-3 py-2 rounded-full flex items-center gap-2 shadow-lg`}>
                 <Eye size={14} className="text-white" />
-                <span className="text-white text-sm font-medium">{profileViews.toLocaleString()}</span>
+                <span className="text-white text-sm font-bold">{profileViews.toLocaleString()}</span>
               </div>
             )}
 
             {/* Premium Badge */}
             {isPremium && (
-              <div className="absolute top-14 left-4 bg-gradient-to-r from-yellow-400 to-yellow-500 px-2 py-1 rounded-full flex items-center gap-1">
-                <Crown className="w-3 h-3 text-yellow-800" />
-                <span className="text-yellow-800 text-xs font-bold">PREMIUM</span>
+              <div className={`absolute top-16 left-4 ${
+                isUltraPremium() 
+                  ? 'bg-gradient-to-r from-red-500 to-pink-500' 
+                  : 'bg-gradient-to-r from-yellow-400 to-yellow-500'
+              } px-3 py-1 rounded-full flex items-center gap-1 shadow-lg`}>
+                <Crown className="w-4 h-4 text-white" />
+                <span className="text-white text-xs font-bold">
+                  {isUltraPremium() ? 'ULTRA+' : 'PREMIUM'}
+                </span>
               </div>
             )}
 
@@ -313,30 +335,46 @@ export default function ProfilePage() {
         </Card>
 
         {/* User Information Section */}
-        <Card className="bg-white/90 backdrop-blur-sm shadow-lg border-0 mb-6 relative z-10">
+        <Card className={`${
+          isUltraPremium() 
+            ? 'bg-white/95 backdrop-blur-lg shadow-2xl border border-pink-200/50' 
+            : 'bg-white/90 backdrop-blur-sm shadow-lg border-0'
+        } mb-6 relative z-10 rounded-3xl`}>
           <CardContent className="p-6">
             {/* Name and Age */}
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h2 className="text-gray-900 text-3xl font-bold mb-1">{name}, {age}</h2>
-                <div className="flex items-center gap-2 text-gray-600 mb-3">
+                <h2 className={`${
+                  isUltraPremium() ? 'text-gray-900' : 'text-gray-900'
+                } text-3xl font-bold mb-1`}>{name}, {age}</h2>
+                <div className={`flex items-center gap-2 ${
+                  isUltraPremium() ? 'text-gray-700' : 'text-gray-600'
+                } mb-3`}>
                   <MapPin size={16} />
                   <span className="text-sm">{location}</span>
                 </div>
               </div>
 
-              <button className="bg-gray-100 hover:bg-gray-200 p-2 rounded-full transition-colors">
-                <Edit3 size={16} className="text-gray-600" />
+              <button className={`${
+                isUltraPremium() 
+                  ? 'bg-red-100 hover:bg-red-200 text-red-600' 
+                  : 'bg-gray-100 hover:bg-gray-200 text-gray-600'
+              } p-3 rounded-full transition-colors shadow-md`}>
+                <Edit3 size={18} />
               </button>
             </div>
 
             {/* Bio */}
-            <p className="text-gray-700 text-sm leading-relaxed mb-4">{bio}</p>
+            <p className={`${
+              isUltraPremium() ? 'text-gray-800' : 'text-gray-700'
+            } text-sm leading-relaxed mb-4 font-medium`}>{bio}</p>
 
             {/* Profession */}
-            <div className="flex items-center gap-2 text-gray-600 mb-4">
+            <div className={`flex items-center gap-2 ${
+              isUltraPremium() ? 'text-gray-700' : 'text-gray-600'
+            } mb-4`}>
               <Briefcase size={16} />
-              <span className="text-sm font-medium">{profession}</span>
+              <span className="text-sm font-semibold">{profession}</span>
             </div>
 
             {/* Interest Tags */}
@@ -344,7 +382,11 @@ export default function ProfilePage() {
               {interests.map((interest, index) => (
                 <span
                   key={index}
-                  className="bg-gray-100 px-3 py-1 text-gray-700 text-xs font-medium"
+                  className={`${
+                    isUltraPremium() 
+                      ? 'bg-pink-100 text-red-700 border border-pink-200' 
+                      : 'bg-gray-100 text-gray-700'
+                  } px-3 py-1 text-xs font-medium rounded-full`}
                 >
                   {interest}
                 </span>
@@ -358,7 +400,11 @@ export default function ProfilePage() {
                   // Edit profile functionality
                   alert('Edit profile feature coming soon!');
                 }}
-                className="flex-1 bg-gradient-to-r from-romance-500 to-passion-500 hover:from-romance-600 hover:to-passion-600 text-white font-semibold py-3 border-0"
+                className={`flex-1 ${
+                  isUltraPremium() 
+                    ? 'bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600' 
+                    : 'bg-gradient-to-r from-romance-500 to-passion-500 hover:from-romance-600 hover:to-passion-600'
+                } text-white font-bold py-4 border-0 rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-200`}
               >
                 <Edit3 className="w-4 h-4 mr-2" />
                 Edit Profile
@@ -377,9 +423,13 @@ export default function ProfilePage() {
                     alert('Profile link copied to clipboard!');
                   }
                 }}
-                className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-4 py-3 border-0"
+                className={`${
+                  isUltraPremium() 
+                    ? 'bg-teal-100 hover:bg-teal-200 text-teal-700' 
+                    : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                } font-bold px-6 py-4 border-0 rounded-2xl shadow-md transform hover:scale-105 transition-all duration-200`}
               >
-                <Users className="w-4 h-4" />
+                <Users className="w-5 h-5" />
               </Button>
             </div>
           </CardContent>
@@ -387,54 +437,90 @@ export default function ProfilePage() {
 
         {/* Profile Stats Cards */}
         <div className="grid grid-cols-2 gap-3 mb-6">
-          <Card className="bg-white/80 backdrop-blur-sm shadow-sm border-0">
+          <Card className={`${
+            isUltraPremium() 
+              ? 'bg-white/95 backdrop-blur-lg shadow-lg border border-teal-200/50' 
+              : 'bg-white/80 backdrop-blur-sm shadow-sm border-0'
+          } rounded-2xl`}>
             <CardContent className="p-4 text-center">
               {isPremium ? (
                 <>
-                  <div className="w-10 h-10 bg-blue-100 flex items-center justify-center mx-auto mb-2">
-                    <Eye className="w-5 h-5 text-blue-600" />
+                  <div className={`w-12 h-12 ${
+                    isUltraPremium() 
+                      ? 'bg-teal-100 text-teal-600' 
+                      : 'bg-blue-100 text-blue-600'
+                  } flex items-center justify-center mx-auto mb-2 rounded-xl`}>
+                    <Eye className="w-6 h-6" />
                   </div>
-                  <div className="text-lg font-bold text-blue-700">{profileViews}</div>
-                  <div className="text-xs text-blue-600">Views</div>
+                  <div className={`text-xl font-bold ${
+                    isUltraPremium() ? 'text-teal-700' : 'text-blue-700'
+                  }`}>{profileViews}</div>
+                  <div className={`text-xs font-medium ${
+                    isUltraPremium() ? 'text-teal-600' : 'text-blue-600'
+                  }`}>Views</div>
                 </>
               ) : (
                 <>
-                  <div className="w-10 h-10 bg-gray-200 flex items-center justify-center mx-auto mb-2 relative">
+                  <div className="w-12 h-12 bg-gray-200 flex items-center justify-center mx-auto mb-2 relative rounded-xl">
                     <Eye className="w-5 h-5 text-gray-400" />
-                    <Crown className="w-3 h-3 text-yellow-500 absolute -top-1 -right-1" />
+                    <Crown className="w-4 h-4 text-yellow-500 absolute -top-1 -right-1" />
                   </div>
-                  <div className="text-lg font-bold text-gray-400">***</div>
+                  <div className="text-xl font-bold text-gray-400">***</div>
                   <div className="text-xs text-gray-400">Premium</div>
                 </>
               )}
             </CardContent>
           </Card>
 
-          <Card className="bg-white/80 backdrop-blur-sm shadow-sm border-0">
+          <Card className={`${
+            isUltraPremium() 
+              ? 'bg-white/95 backdrop-blur-lg shadow-lg border border-pink-200/50' 
+              : 'bg-white/80 backdrop-blur-sm shadow-sm border-0'
+          } rounded-2xl`}>
             <CardContent className="p-4 text-center">
-              <div className="w-10 h-10 bg-green-100 flex items-center justify-center mx-auto mb-2">
-                <Users className="w-5 h-5 text-green-600" />
+              <div className={`w-12 h-12 ${
+                isUltraPremium() 
+                  ? 'bg-red-100 text-red-600' 
+                  : 'bg-green-100 text-green-600'
+              } flex items-center justify-center mx-auto mb-2 rounded-xl`}>
+                <Users className="w-6 h-6" />
               </div>
-              <div className="text-lg font-bold text-gray-800">23</div>
-              <div className="text-xs text-gray-500">Friends</div>
+              <div className={`text-xl font-bold ${
+                isUltraPremium() ? 'text-red-700' : 'text-gray-800'
+              }`}>23</div>
+              <div className={`text-xs font-medium ${
+                isUltraPremium() ? 'text-red-600' : 'text-gray-500'
+              }`}>Friends</div>
             </CardContent>
           </Card>
 
           <Card
-            className="bg-white/80 backdrop-blur-sm shadow-sm border-0 cursor-pointer hover:shadow-md transition-shadow"
+            className={`${
+              isUltraPremium() 
+                ? 'bg-white/95 backdrop-blur-lg shadow-lg border border-pink-200/50 hover:shadow-xl hover:scale-105' 
+                : 'bg-white/80 backdrop-blur-sm shadow-sm border-0 hover:shadow-md'
+            } cursor-pointer transition-all duration-200 rounded-2xl`}
             onClick={handleShowLikes}
           >
             <CardContent className="p-4 text-center">
-              <div className="w-10 h-10 bg-pink-100 flex items-center justify-center mx-auto mb-2 relative">
-                <Heart className="w-5 h-5 text-pink-600" />
+              <div className={`w-12 h-12 ${
+                isUltraPremium() 
+                  ? 'bg-pink-100 text-pink-600' 
+                  : 'bg-pink-100 text-pink-600'
+              } flex items-center justify-center mx-auto mb-2 relative rounded-xl`}>
+                <Heart className="w-6 h-6" />
                 {!isPremium && (
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full animate-pulse"></div>
                 )}
               </div>
-              <div className="text-lg font-bold text-pink-700">
+              <div className={`text-xl font-bold ${
+                isUltraPremium() ? 'text-pink-700' : 'text-pink-700'
+              }`}>
                 {isPremium ? likesData.length : '?'}
               </div>
-              <div className="text-xs text-pink-600">
+              <div className={`text-xs font-medium ${
+                isUltraPremium() ? 'text-pink-600' : 'text-pink-600'
+              }`}>
                 {isPremium ? 'Likes' : 'Tap to See'}
               </div>
             </CardContent>
@@ -443,23 +529,47 @@ export default function ProfilePage() {
 
         {/* Secondary Stats Row */}
         <div className="grid grid-cols-2 gap-3 mb-6">
-          <Card className="bg-white/80 backdrop-blur-sm shadow-sm border-0">
+          <Card className={`${
+            isUltraPremium() 
+              ? 'bg-white/95 backdrop-blur-lg shadow-lg border border-yellow-200/50' 
+              : 'bg-white/80 backdrop-blur-sm shadow-sm border-0'
+          } rounded-2xl`}>
             <CardContent className="p-4 text-center">
-              <div className="w-10 h-10 bg-yellow-100 flex items-center justify-center mx-auto mb-2">
-                <Star className="w-5 h-5 text-yellow-600" />
+              <div className={`w-12 h-12 ${
+                isUltraPremium() 
+                  ? 'bg-yellow-100 text-yellow-600' 
+                  : 'bg-yellow-100 text-yellow-600'
+              } flex items-center justify-center mx-auto mb-2 rounded-xl`}>
+                <Star className="w-6 h-6" />
               </div>
-              <div className="text-lg font-bold text-yellow-700">{coins}</div>
-              <div className="text-xs text-yellow-600">Coins</div>
+              <div className={`text-xl font-bold ${
+                isUltraPremium() ? 'text-yellow-700' : 'text-yellow-700'
+              }`}>{coins}</div>
+              <div className={`text-xs font-medium ${
+                isUltraPremium() ? 'text-yellow-600' : 'text-yellow-600'
+              }`}>Coins</div>
             </CardContent>
           </Card>
 
-          <Card className="bg-white/80 backdrop-blur-sm shadow-sm border-0">
+          <Card className={`${
+            isUltraPremium() 
+              ? 'bg-white/95 backdrop-blur-lg shadow-lg border border-purple-200/50' 
+              : 'bg-white/80 backdrop-blur-sm shadow-sm border-0'
+          } rounded-2xl`}>
             <CardContent className="p-4 text-center">
-              <div className="w-10 h-10 bg-purple-100 flex items-center justify-center mx-auto mb-2">
-                <MessageCircle className="w-5 h-5 text-purple-600" />
+              <div className={`w-12 h-12 ${
+                isUltraPremium() 
+                  ? 'bg-purple-100 text-purple-600' 
+                  : 'bg-purple-100 text-purple-600'
+              } flex items-center justify-center mx-auto mb-2 rounded-xl`}>
+                <MessageCircle className="w-6 h-6" />
               </div>
-              <div className="text-lg font-bold text-purple-700">156</div>
-              <div className="text-xs text-purple-600">Chats</div>
+              <div className={`text-xl font-bold ${
+                isUltraPremium() ? 'text-purple-700' : 'text-purple-700'
+              }`}>156</div>
+              <div className={`text-xs font-medium ${
+                isUltraPremium() ? 'text-purple-600' : 'text-purple-600'
+              }`}>Chats</div>
             </CardContent>
           </Card>
         </div>
@@ -468,17 +578,25 @@ export default function ProfilePage() {
         <div className="space-y-3">
           <Button
             onClick={() => navigate('/premium')}
-            className="w-full bg-gradient-to-r from-peach-400 to-coral-500 hover:from-peach-500 hover:to-coral-600 text-white font-semibold py-4 shadow-lg"
+            className={`w-full ${
+              isUltraPremium() 
+                ? 'bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600' 
+                : 'bg-gradient-to-r from-peach-400 to-coral-500 hover:from-peach-500 hover:to-coral-600'
+            } text-white font-bold py-4 shadow-lg rounded-2xl transform hover:scale-105 transition-all duration-200`}
           >
             <Crown className="w-5 h-5 mr-2" />
-            Upgrade to Premium
+            {isUltraPremium() ? 'ULTRA+ Settings' : 'Upgrade to Premium'}
           </Button>
           
           <div className="grid grid-cols-2 gap-3">
             <Button
               onClick={() => navigate('/chat')}
               variant="outline"
-              className="py-3 rounded-xl border-gray-200 hover:bg-gray-50"
+              className={`py-4 rounded-2xl ${
+                isUltraPremium() 
+                  ? 'border-red-200 text-red-600 hover:bg-red-50' 
+                  : 'border-gray-200 hover:bg-gray-50'
+              } font-bold shadow-md transform hover:scale-105 transition-all duration-200`}
             >
               <MessageCircle className="w-4 h-4 mr-2" />
               Messages
@@ -487,7 +605,11 @@ export default function ProfilePage() {
             <Button
               onClick={() => navigate('/')}
               variant="outline" 
-              className="py-3 rounded-xl border-gray-200 hover:bg-gray-50"
+              className={`py-4 rounded-2xl ${
+                isUltraPremium() 
+                  ? 'border-teal-200 text-teal-600 hover:bg-teal-50' 
+                  : 'border-gray-200 hover:bg-gray-50'
+              } font-bold shadow-md transform hover:scale-105 transition-all duration-200`}
             >
               <Users className="w-4 h-4 mr-2" />
               Discover
