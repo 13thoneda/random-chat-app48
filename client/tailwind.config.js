@@ -1,531 +1,184 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "./ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import {
-  Coins,
-  Gift,
-  Play,
-  Users,
-  Crown,
-  X,
-  Star,
-  Zap,
-  Sparkles,
-  TrendingUp,
-  Calendar,
-  Video,
-  MessageCircle,
-  Target,
-  Clock,
-  Percent,
-  Shield,
-  Heart,
-  Flame,
-  Trophy,
-  Diamond,
-  AlertCircle,
-  RotateCcw,
-  ExternalLink,
-} from "lucide-react";
-import { useCoin } from "../context/CoinProvider";
-import { usePremium } from "../context/PremiumProvider";
-import RewardedAdButton from "./RewardedAdButton";
-
-interface TreasureChestProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export default function TreasureChest({ isOpen, onClose }: TreasureChestProps) {
-  const {
-    coins,
-    addCoins,
-    watchAd,
-    claimDailyBonus,
-    completeChat,
-    adsWatchedToday,
-    maxAdsPerDay,
-    canClaimDailyBonus,
-    currentStreak,
-    hasCompletedOnboarding,
-  } = useCoin();
-  const { isPremium } = usePremium();
-  const navigate = useNavigate();
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [showLimitedOffer, setShowLimitedOffer] = useState(true);
-  const [timeLeft, setTimeLeft] = useState(3600); // 1 hour in seconds
-  const [urgencyMessage, setUrgencyMessage] = useState("");
-
-  useEffect(() => {
-    if (isOpen) {
-      setIsAnimating(true);
-      const timer = setTimeout(() => setIsAnimating(false), 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [isOpen]);
-
-  // Timer for limited offers
-  useEffect(() => {
-    if (timeLeft > 0) {
-      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [timeLeft]);
-
-  // Urgency messages
-  useEffect(() => {
-    const messages = [
-      "⚡ Flash Sale! Don't miss out!",
-      "🔥 Limited Time Offer!",
-      "💎 Exclusive Deal Today Only!",
-      "⏰ Hurry! Sale ends soon!",
-      "🎯 Best Value Pack!",
-    ];
-    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-    setUrgencyMessage(randomMessage);
-  }, [isOpen]);
-
-  const formatTime = (seconds: number) => {
-    const hrs = Math.floor(seconds / 3600);
-    const mins = Math.floor((seconds % 3600) / 60);
-    const secs = seconds % 60;
-    return `${hrs.toString().padStart(2, "0")}:${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
-  };
-
-  if (!isOpen) return null;
-
-  // Enhanced coin packs with psychological pricing and scarcity
-  const coinPacks = [
-    {
-      id: "starter",
-      coins: 100,
-      price: "₹19",
-      originalPrice: "₹39",
-      popular: false,
-      bonus: "+0 Free!",
-      savings: "51% OFF",
-      tag: "STARTER",
-      color: "from-blue-500 to-blue-600",
-      bgGradient: "from-blue-50 to-sky-50",
-      description: "Perfect for beginners",
+/** @type {import('tailwindcss').Config} */
+export default {
+  darkMode: ["class"],
+  content: [
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
+  ],
+  prefix: "",
+  theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
     },
-    {
-      id: "popular",
-      coins: 200,
-      price: "₹29",
-      originalPrice: "₹49",
-      popular: true,
-      bonus: "+0 FREE!",
-      savings: "41% OFF",
-      tag: "MOST POPULAR",
-      color: "from-purple-500 to-pink-500",
-      bgGradient: "from-purple-50 to-pink-50",
-      description: "Best value for money",
-      badge: "💖 Loved by 89% users",
+    extend: {
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+          25: "hsl(330, 100%, 98%)",
+          50: "hsl(330, 100%, 95%)",
+          100: "hsl(330, 100%, 90%)",
+          200: "hsl(330, 100%, 80%)",
+          300: "hsl(330, 100%, 70%)",
+          400: "hsl(330, 100%, 60%)",
+          500: "hsl(330, 100%, 50%)",
+          600: "hsl(330, 100%, 40%)",
+          700: "hsl(330, 100%, 30%)",
+          800: "hsl(330, 100%, 20%)",
+          900: "hsl(330, 100%, 10%)",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+          25: "hsl(340, 100%, 98%)",
+          50: "hsl(340, 100%, 95%)",
+          100: "hsl(340, 100%, 90%)",
+          200: "hsl(340, 100%, 80%)",
+          300: "hsl(340, 100%, 70%)",
+          400: "hsl(340, 100%, 60%)",
+          500: "hsl(340, 100%, 50%)",
+          600: "hsl(340, 100%, 40%)",
+          700: "hsl(340, 100%, 30%)",
+          800: "hsl(340, 100%, 20%)",
+          900: "hsl(340, 100%, 10%)",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        // Romantic color palette
+        peach: {
+          25: "hsl(20, 100%, 98%)",
+          50: "hsl(20, 100%, 95%)",
+          100: "hsl(20, 100%, 90%)",
+          200: "hsl(20, 100%, 80%)",
+          300: "hsl(20, 100%, 70%)",
+          400: "hsl(20, 100%, 60%)",
+          500: "hsl(20, 100%, 50%)",
+          600: "hsl(20, 100%, 40%)",
+          700: "hsl(20, 100%, 30%)",
+          800: "hsl(20, 100%, 20%)",
+          900: "hsl(20, 100%, 10%)",
+        },
+        coral: {
+          25: "hsl(10, 100%, 98%)",
+          50: "hsl(10, 100%, 95%)",
+          100: "hsl(10, 100%, 90%)",
+          200: "hsl(10, 100%, 80%)",
+          300: "hsl(10, 100%, 70%)",
+          400: "hsl(10, 100%, 60%)",
+          500: "hsl(10, 100%, 50%)",
+          600: "hsl(10, 100%, 40%)",
+          700: "hsl(10, 100%, 30%)",
+          800: "hsl(10, 100%, 20%)",
+          900: "hsl(10, 100%, 10%)",
+        },
+        blush: {
+          25: "hsl(350, 100%, 98%)",
+          50: "hsl(350, 100%, 95%)",
+          100: "hsl(350, 100%, 90%)",
+          200: "hsl(350, 100%, 80%)",
+          300: "hsl(350, 100%, 70%)",
+          400: "hsl(350, 100%, 60%)",
+          500: "hsl(350, 100%, 50%)",
+          600: "hsl(350, 100%, 40%)",
+          700: "hsl(350, 100%, 30%)",
+          800: "hsl(350, 100%, 20%)",
+          900: "hsl(350, 100%, 10%)",
+        },
+        cream: {
+          25: "hsl(45, 100%, 98%)",
+          50: "hsl(45, 100%, 95%)",
+          100: "hsl(45, 100%, 90%)",
+          200: "hsl(45, 100%, 80%)",
+          300: "hsl(45, 100%, 70%)",
+          400: "hsl(45, 100%, 60%)",
+          500: "hsl(45, 100%, 50%)",
+          600: "hsl(45, 100%, 40%)",
+          700: "hsl(45, 100%, 30%)",
+          800: "hsl(45, 100%, 20%)",
+          900: "hsl(45, 100%, 10%)",
+        },
+        rose: {
+          25: "hsl(320, 100%, 98%)",
+          50: "hsl(320, 100%, 95%)",
+          100: "hsl(320, 100%, 90%)",
+          200: "hsl(320, 100%, 80%)",
+          300: "hsl(320, 100%, 70%)",
+          400: "hsl(320, 100%, 60%)",
+          500: "hsl(320, 100%, 50%)",
+          600: "hsl(320, 100%, 40%)",
+          700: "hsl(320, 100%, 30%)",
+          800: "hsl(320, 100%, 20%)",
+          900: "hsl(320, 100%, 10%)",
+        },
+        pink: {
+          25: "hsl(310, 100%, 98%)",
+          50: "hsl(310, 100%, 95%)",
+          100: "hsl(310, 100%, 90%)",
+          200: "hsl(310, 100%, 80%)",
+          300: "hsl(310, 100%, 70%)",
+          400: "hsl(310, 100%, 60%)",
+          500: "hsl(310, 100%, 50%)",
+          600: "hsl(310, 100%, 40%)",
+          700: "hsl(310, 100%, 30%)",
+          800: "hsl(310, 100%, 20%)",
+          900: "hsl(310, 100%, 10%)",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      boxShadow: {
+        '3xl': '0 35px 60px -12px rgba(0, 0, 0, 0.25)',
+      },
+      borderWidth: {
+        '3': '3px',
+      },
     },
-    {
-      id: "mega",
-      coins: 800,
-      price: "₹99",
-      originalPrice: "₹199",
-      popular: false,
-      bonus: "+0 FREE!",
-      savings: "50% OFF",
-      tag: "MEGA DEAL",
-      color: "from-emerald-500 to-green-600",
-      bgGradient: "from-emerald-50 to-green-50",
-      description: "For power users",
-      badge: "🔥 Limited time",
-    },
-    {
-      id: "ultimate",
-      coins: 2000,
-      price: "₹199",
-      originalPrice: "₹399",
-      popular: false,
-      bonus: "+0 FREE!",
-      savings: "50% OFF",
-      tag: "ULTIMATE",
-      color: "from-orange-500 to-red-500",
-      bgGradient: "from-orange-50 to-red-50",
-      description: "Maximum value pack",
-      badge: "💎 VIP Special",
-      vip: true,
-    },
-  ];
-
-  const handlePurchasePack = (pack: (typeof coinPacks)[0]) => {
-    // Add purchase psychology with confirmation
-    const message = `🎉 Great choice! You're getting ${pack.coins + parseInt(pack.bonus.replace(/\D/g, ""))} coins for just ${pack.price}!\n\n💰 That's ${pack.savings} savings!\n\nConfirm purchase?`;
-
-    if (confirm(message)) {
-      const purchaseCoins = async () => {
-        try {
-          const totalCoins =
-            pack.coins + parseInt(pack.bonus.replace(/\D/g, ""));
-          const success = await addCoins(totalCoins);
-          if (success) {
-            alert(
-              `🎊 SUCCESS! ${totalCoins} coins added to your account!\n\n✨ Enjoy your enhanced chat experience!`,
-            );
-          } else {
-            alert(`❌ Purchase failed. Please try again.`);
-          }
-        } catch (error) {
-          console.error("Error purchasing coins:", error);
-          alert(`❌ Purchase failed. Please try again.`);
-        }
-      };
-
-      purchaseCoins();
-      onClose();
-    }
-  };
-
-  const earningMethods = [
-    {
-      id: "daily",
-      title: "Daily Login Bonus",
-      coins: 10,
-      icon: Calendar,
-      color: "from-peach-400 to-coral-500",
-      bgColor: "bg-gradient-to-br from-peach-50 to-coral-50",
-      description: "Open the app daily for rewards",
-      action: claimDailyBonus,
-      available: canClaimDailyBonus,
-      buttonText: canClaimDailyBonus ? "🎁 Earn +10 Coins" : "✅ Claimed Today",
-      streak: currentStreak,
-      highlight: "Earn +10",
-    },
-    {
-      id: "ads",
-      title: "Watch Rewarded Ads",
-      coins: 15,
-      icon: Play,
-      color: "from-blush-400 to-peach-500",
-      bgColor: "bg-gradient-to-br from-blush-50 to-peach-50",
-      description: `Watch ads and earn instant coins`,
-      action: watchAd,
-      available: adsWatchedToday < maxAdsPerDay,
-      buttonText:
-        adsWatchedToday < maxAdsPerDay
-          ? `🎯 Earn +15 Coins (${maxAdsPerDay - adsWatchedToday} left)`
-          : "✅ Daily Limit Reached",
-      progress: `${adsWatchedToday}/${maxAdsPerDay} today`,
-      highlight: "Earn +15",
-    },
-  ];
-
-  return (
-    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-start justify-center z-50 p-2 overflow-y-auto">
-      <Card className="w-full max-w-lg mx-auto bg-gradient-to-br from-pink-25 via-rose-25 to-pink-50 border-2 border-primary-200 shadow-3xl relative overflow-hidden my-2 min-h-fit max-h-[98vh]">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-4 left-4 w-8 h-8 bg-primary-200 rounded-full opacity-30 animate-pulse"></div>
-          <div className="absolute top-12 right-8 w-6 h-6 bg-accent-200 rounded-full opacity-40 animate-bounce"></div>
-          <div
-            className="absolute bottom-16 left-8 w-4 h-4 bg-primary-200 rounded-full opacity-25 animate-pulse"
-            style={{ animationDelay: "1s" }}
-          ></div>
-          <div
-            className="absolute bottom-8 right-4 w-5 h-5 bg-pink-200 rounded-full opacity-30 animate-bounce"
-            style={{ animationDelay: "2s" }}
-          ></div>
-        </div>
-
-        <CardHeader className="text-center relative z-10 pb-3">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onClose}
-            className="absolute right-2 top-2 p-2 text-primary-500 hover:bg-primary-100 rounded-full transition-all duration-200 hover:scale-110"
-          >
-            <X size={22} />
-          </Button>
-
-          {/* Attractive Diamond Icon */}
-          <div className="flex justify-center mb-4">
-            <div
-              className={`relative ${isAnimating ? "animate-bounce" : ""} transform hover:scale-110 transition-transform duration-300`}
-            >
-              <div className="w-24 h-24 bg-gradient-to-br from-primary-400 via-accent-500 to-primary-400 rounded-2xl relative overflow-hidden shadow-2xl border-3 border-primary-300 flex items-center justify-center">
-                <Diamond className="h-12 w-12 text-white drop-shadow-lg" />
-                <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-black/10 rounded-2xl"></div>
-                {isAnimating && (
-                  <>
-                    <div className="absolute -top-3 -left-3 text-yellow-300 text-xl animate-ping">
-                      ✨
-                    </div>
-                    <div
-                      className="absolute -top-4 -right-2 text-primary-300 text-lg animate-ping"
-                      style={{ animationDelay: "0.2s" }}
-                    >
-                      💎
-                    </div>
-                    <div
-                      className="absolute -top-2 left-1/2 text-accent-300 text-lg animate-ping"
-                      style={{ animationDelay: "0.4s" }}
-                    >
-                      ✨
-                    </div>
-                    <div
-                      className="absolute -bottom-1 -left-2 text-pink-400 text-sm animate-ping"
-                      style={{ animationDelay: "0.6s" }}
-                    >
-                      💫
-                    </div>
-                    <div
-                      className="absolute -bottom-2 -right-1 text-primary-400 text-sm animate-ping"
-                      style={{ animationDelay: "0.8s" }}
-                    >
-                      ✨
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <CardTitle className="text-2xl font-extrabold bg-gradient-to-r from-primary-600 via-accent-600 to-primary-600 bg-clip-text text-transparent mb-2">
-            💰 Coin Store 💰
-          </CardTitle>
-
-          {/* Current Balance */}
-              <Coins className="h-5 w-5 text-peach-600 animate-pulse" />
-              <span className="font-extrabold text-lg text-peach-700">
-                {coins} Coins
-              </span>
-            </div>
-    --ring: 330 81% 70%; /* lighter pink for dark mode */
-
-          {/* Urgency Timer */}
-          {showLimitedOffer && (
-            <div className="bg-gradient-to-r from-peach-500 to-coral-500 text-white rounded-full px-4 py-2 mt-2 inline-block animate-pulse">
-              <div className="flex items-center gap-2 text-sm font-bold">
-                <Clock className="h-4 w-4" />
-                <span>{urgencyMessage}</span>
-                <span>{formatTime(timeLeft)}</span>
-              </div>
-            </div>
-          )}
-
-          {/* Spin Wheel Button with reduced bounce */}
-          <div className="mt-3">
-            <button
-              onClick={() => {
-                onClose();
-                navigate("/spin-wheel");
-              }}
-              className="bg-gradient-to-r from-peach-500 via-coral-500 to-blush-500 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-              style={{ animation: "bounce 1s infinite" }}
-            >
-              <div className="flex items-center gap-2">
-                <RotateCcw className="h-5 w-5" />
-                <span>🎰 Spin & Win Coins!</span>
-                <ExternalLink className="h-4 w-4" />
-              </div>
-            </button>
-            <div className="text-xs text-peach-600 font-semibold mt-1 bg-peach-100 rounded-full px-3 py-1 inline-block">
-              ✨ Try your luck! Watch ads to win up to 50 coins! ✨
-            </div>
-          </div>
-        </CardHeader>
-
-        <CardContent className="space-y-4 relative z-10 overflow-y-auto max-h-[calc(98vh-180px)] pb-4">
-          {/* Social Proof Banner */}
-          <div className="bg-gradient-to-r from-cream-100 to-peach-100 rounded-xl p-3 border border-peach-300">
-            <div className="flex items-center gap-2 text-center justify-center">
-              <Users className="h-5 w-5 text-peach-600" />
-              <span className="text-peach-800 font-semibold text-sm">
-                🎉 <strong>2,847</strong> users bought coins today!
-              </span>
-            </div>
-          </div>
-
-          {/* Purchase Coins Section with Compelling Design */}
-          <div className="space-y-3">
-            <h3 className="font-bold text-peach-800 text-center flex items-center justify-center gap-2 text-base">
-              <div className="bg-peach-100 p-1.5 rounded-full">
-                <Crown className="h-5 w-5 text-peach-600" />
-              </div>
-              💎 Special Coin Packs
-            </h3>
-
-            <div className="grid grid-cols-2 gap-2">
-              {coinPacks.map((pack, index) => (
-                <div
-                  key={pack.id}
-                  className={`relative p-3 rounded-xl border-2 cursor-pointer transition-all duration-300 transform hover:scale-105 hover:shadow-xl ${
-                    pack.popular
-                      ? "border-peach-500 bg-gradient-to-br from-peach-50 to-coral-50 shadow-lg ring-2 ring-peach-200"
-                      : "border-gray-300 bg-white hover:border-peach-300"
-                  }`}
-                  onClick={() => handlePurchasePack(pack)}
-                >
-                  {/* Popular/VIP Badge */}
-                  {pack.popular && (
-                    <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-peach-500 to-coral-500 text-white text-xs px-2 py-1 rounded-full font-bold animate-pulse">
-                      {pack.tag} 🔥
-                    </div>
-                  )}
-
-                  {pack.vip && (
-                    <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-coral-500 to-peach-500 text-white text-xs px-2 py-1 rounded-full font-bold animate-pulse">
-                      💎 {pack.tag}
-                    </div>
-                  )}
-
-                  {/* Savings Badge */}
-                  <div className="absolute -top-1 -right-1 bg-peach-500 text-white text-xs px-2 py-1 rounded-full font-bold transform rotate-12">
-                    {pack.savings}
-                  </div>
-
-                  <div className="text-center">
-                    {/* Coins Amount */}
-                    <div className="text-xl font-bold text-peach-700 mb-1">
-                      {pack.coins}
-                    </div>
-                    <div className="text-xs text-gray-600 mb-2">base coins</div>
-
-                    {/* Bonus Display */}
-                    {pack.bonus && (
-                      <div className="text-xs text-cream-600 font-bold mb-2 bg-cream-100 rounded-full px-2 py-1 animate-pulse">
-                        {pack.bonus}
-                      </div>
-                    )}
-
-                    {/* Pricing */}
-                    <div className="mb-2">
-                      <div className="text-xs text-gray-500 line-through">
-                        {pack.originalPrice}
-                      </div>
-                      <div className="font-bold text-lg text-gray-800">
-                        {pack.price}
-                      </div>
-                    </div>
-
-                    {/* Description */}
-                    <div className="text-xs text-gray-600 mb-2">
-                      {pack.description}
-                    </div>
-
-                    {/* User Badge */}
-                    {pack.badge && (
-                      <div className="text-xs text-peach-600 font-semibold bg-peach-100 rounded px-2 py-1">
-                        {pack.badge}
-                      </div>
-                    )}
-
-                    {/* Total Value Display */}
-                    <div className="text-xs text-cream-700 font-bold mt-2 bg-cream-50 rounded px-2 py-1">
-                      Total:{" "}
-                      {pack.coins +
-                        parseInt(pack.bonus.replace(/\D/g, "") || "0")}{" "}
-                      coins
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Enhanced Free Coins Section */}
-          <div className="space-y-3">
-            <h3 className="font-bold text-peach-800 text-center flex items-center justify-center gap-2 text-base">
-              <div className="bg-gradient-to-r from-peach-100 to-coral-100 p-2 rounded-full shadow-md">
-                <Gift className="h-6 w-6 text-peach-600" />
-              </div>
-              🎁 Free Coins - No Payment!
-            </h3>
-
-            <div className="grid grid-cols-1 gap-3">
-              {earningMethods.map((method) => (
-                <div
-                  key={method.id}
-                  className={`${method.bgColor} rounded-xl p-4 border-2 border-peach-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]`}
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`bg-gradient-to-r ${method.color} p-2 rounded-full shadow-lg animate-pulse`}
-                      >
-                        <method.icon className="h-6 w-6 text-white" />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="font-bold text-gray-800 text-base">
-                          {method.title}
-                        </h4>
-                        <p className="text-sm text-gray-600">
-                          {method.description}
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <div className="bg-gradient-to-r from-peach-500 to-coral-500 text-white px-3 py-1 rounded-full font-bold text-sm shadow-md">
-                          {method.highlight}
-                        </div>
-                        <div className="text-xs text-gray-500 mt-1">coins</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Progress or Status */}
-                  {method.progress && (
-                    <div className="mb-3">
-                      <div className="text-xs text-gray-600 mb-1">
-                        {method.progress}
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div
-                          className={`bg-gradient-to-r ${method.color} h-2 rounded-full transition-all duration-300`}
-                          style={{
-                            width: `${(adsWatchedToday / maxAdsPerDay) * 100}%`,
-                          }}
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Enhanced Action Button */}
-                  {method.id === "ads" ? (
-                    <RewardedAdButton
-                      variant="premium"
-                      disabled={!method.available}
-                      className="w-full"
-                      onRewardEarned={(amount) => {
-                        console.log(`User earned ${amount} coins from TreasureChest ad`);
-                      }}
-                    />
-                  ) : (
-                    <Button
-                      onClick={method.action}
-                      disabled={!method.available}
-                      className={`w-full font-bold py-3 rounded-xl shadow-lg transition-all duration-300 text-base transform hover:scale-105 ${
-                        method.available
-                          ? `bg-gradient-to-r ${method.color} hover:shadow-xl text-white animate-pulse`
-                          : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                      }`}
-                    >
-                      {method.buttonText}
-                    </Button>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Final CTA */}
-          <div className="bg-gradient-to-r from-peach-100 to-coral-100 rounded-xl p-3 border-2 border-peach-200 text-center">
-            <div className="text-peach-800 font-bold text-sm mb-1">
-              💫 Why Buy Coins?
-            </div>
-            <div className="text-peach-700 text-xs">
-              • Skip waiting times • Premium features • Unlimited chats •
-              Special filters
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
+  },
+  plugins: [require("tailwindcss-animate")],
 }
