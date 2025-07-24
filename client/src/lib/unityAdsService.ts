@@ -101,6 +101,13 @@ class UnityAdsService {
       // Load Unity Ads SDK
       await this.loadUnityAdsSDK();
 
+      // If SDK failed to load (e.g., in development), mark as initialized but inactive
+      if (!this.isSDKLoaded) {
+        console.log('⚠️ Unity Ads SDK not loaded, running in mock mode');
+        this.isInitialized = false;
+        return false;
+      }
+
       // Initialize Unity Ads
       if (window.UnityAds) {
         return new Promise((resolve) => {
@@ -126,11 +133,11 @@ class UnityAdsService {
           );
         });
       } else {
-        console.error('❌ Unity Ads SDK not available');
+        console.warn('⚠️ Unity Ads SDK not available (expected in development)');
         return false;
       }
     } catch (error) {
-      console.error('❌ Unity Ads initialization error:', error);
+      console.warn('⚠️ Unity Ads initialization error (non-critical):', error);
       return false;
     }
   }
@@ -146,6 +153,16 @@ class UnityAdsService {
         return;
       }
 
+      // Check if we're in a development environment that might block external scripts
+      const isDevelopment = import.meta.env.DEV || window.location.hostname === 'localhost' || window.location.hostname.includes('webcontainer');
+      
+      if (isDevelopment) {
+        console.warn('⚠️ Unity Ads SDK loading skipped in development environment');
+        this.isSDKLoaded = false;
+        resolve(); // Resolve anyway to prevent blocking the app
+        return;
+      }
+
       const script = document.createElement('script');
       script.async = true;
       script.src = 'https://unityads.unity3d.com/webview/2.0/UnityAds.js';
@@ -157,8 +174,9 @@ class UnityAdsService {
       };
       
       script.onerror = () => {
-        console.error('❌ Failed to load Unity Ads SDK');
-        reject(new Error('Failed to load Unity Ads SDK'));
+        console.warn('⚠️ Failed to load Unity Ads SDK (non-critical in development)');
+        this.isSDKLoaded = false;
+        resolve(); // Resolve anyway to prevent blocking the app
       };
       
       document.head.appendChild(script);

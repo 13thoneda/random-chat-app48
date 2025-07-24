@@ -42,19 +42,21 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (!socket) {
-      // Determine socket URL based on environment
-      let socketUrl: string;
-
-      if (window.location.hostname.includes('webcontainer-api.io')) {
-        // WebContainer environment - use HTTP (not HTTPS) for WebSocket
-        const protocol = 'http';
-        const host = window.location.hostname.replace('5173', '80');
-        const baseUrl = `${protocol}://${host}`;
-        socketUrl = baseUrl;
-      } else if (window.location.hostname === "localhost") {
-        socketUrl = "http://localhost:8000";
-      } else {
-        socketUrl = `http://${window.location.hostname}:8000`;
+      // Prioritize environment variable for socket URL
+      let socketUrl: string = import.meta.env.VITE_SOCKET_URL;
+      
+      // Fallback to dynamic URL determination if env var not set
+      if (!socketUrl) {
+        if (window.location.hostname.includes('webcontainer-api.io')) {
+          // WebContainer environment - use HTTP (not HTTPS) for WebSocket
+          const protocol = 'http';
+          const host = window.location.hostname.replace('5173', '80');
+          socketUrl = `${protocol}://${host}`;
+        } else if (window.location.hostname === "localhost") {
+          socketUrl = "http://localhost:8000";
+        } else {
+          socketUrl = `http://${window.location.hostname}:8000`;
+        }
       }
 
       console.log('Attempting to connect to:', socketUrl);

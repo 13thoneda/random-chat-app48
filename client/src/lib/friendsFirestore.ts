@@ -261,10 +261,10 @@ export async function removeFriend(userId: string, friendId: string): Promise<bo
  */
 export async function getUserFriends(userId: string): Promise<Friend[]> {
   try {
+    // Use a simpler query without orderBy to avoid index requirements
     const friendsQuery = query(
       collection(db, "friends"),
-      where("userId", "==", userId),
-      orderBy("addedAt", "desc")
+      where("userId", "==", userId)
     );
 
     const snapshot = await getDocs(friendsQuery);
@@ -274,7 +274,12 @@ export async function getUserFriends(userId: string): Promise<Friend[]> {
       friends.push({ id: doc.id, ...doc.data() } as Friend);
     });
 
-    return friends;
+    // Sort in memory instead of using Firestore orderBy
+    return friends.sort((a, b) => {
+      const aTime = a.addedAt?.toMillis() || 0;
+      const bTime = b.addedAt?.toMillis() || 0;
+      return bTime - aTime;
+    });
   } catch (error) {
     console.error("❌ Error getting user friends:", error);
     return [];
@@ -286,11 +291,11 @@ export async function getUserFriends(userId: string): Promise<Friend[]> {
  */
 export async function getPendingFriendRequests(userId: string): Promise<FriendRequest[]> {
   try {
+    // Use a simpler query without orderBy to avoid index requirements
     const requestsQuery = query(
       collection(db, "friendRequests"),
       where("toUserId", "==", userId),
-      where("status", "==", "pending"),
-      orderBy("createdAt", "desc")
+      where("status", "==", "pending")
     );
 
     const snapshot = await getDocs(requestsQuery);
@@ -300,7 +305,12 @@ export async function getPendingFriendRequests(userId: string): Promise<FriendRe
       requests.push({ id: doc.id, ...doc.data() } as FriendRequest);
     });
 
-    return requests;
+    // Sort in memory instead of using Firestore orderBy
+    return requests.sort((a, b) => {
+      const aTime = a.createdAt?.toMillis() || 0;
+      const bTime = b.createdAt?.toMillis() || 0;
+      return bTime - aTime;
+    });
   } catch (error) {
     console.error("❌ Error getting pending friend requests:", error);
     return [];
@@ -312,11 +322,11 @@ export async function getPendingFriendRequests(userId: string): Promise<FriendRe
  */
 export async function getSentFriendRequests(userId: string): Promise<FriendRequest[]> {
   try {
+    // Use a simpler query without orderBy to avoid index requirements
     const requestsQuery = query(
       collection(db, "friendRequests"),
       where("fromUserId", "==", userId),
-      where("status", "==", "pending"),
-      orderBy("createdAt", "desc")
+      where("status", "==", "pending")
     );
 
     const snapshot = await getDocs(requestsQuery);
@@ -326,7 +336,12 @@ export async function getSentFriendRequests(userId: string): Promise<FriendReque
       requests.push({ id: doc.id, ...doc.data() } as FriendRequest);
     });
 
-    return requests;
+    // Sort in memory instead of using Firestore orderBy
+    return requests.sort((a, b) => {
+      const aTime = a.createdAt?.toMillis() || 0;
+      const bTime = b.createdAt?.toMillis() || 0;
+      return bTime - aTime;
+    });
   } catch (error) {
     console.error("❌ Error getting sent friend requests:", error);
     return [];
@@ -338,11 +353,11 @@ export async function getSentFriendRequests(userId: string): Promise<FriendReque
  */
 export function listenToFriendRequests(userId: string, callback: (requests: FriendRequest[]) => void): () => void {
   try {
+    // Use a simpler query without orderBy to avoid index requirements
     const requestsQuery = query(
       collection(db, "friendRequests"),
       where("toUserId", "==", userId),
-      where("status", "==", "pending"),
-      orderBy("createdAt", "desc")
+      where("status", "==", "pending")
     );
 
     const unsubscribe = onSnapshot(requestsQuery, (snapshot) => {
@@ -350,7 +365,15 @@ export function listenToFriendRequests(userId: string, callback: (requests: Frie
       snapshot.forEach((doc) => {
         requests.push({ id: doc.id, ...doc.data() } as FriendRequest);
       });
-      callback(requests);
+      
+      // Sort in memory instead of using Firestore orderBy
+      const sortedRequests = requests.sort((a, b) => {
+        const aTime = a.createdAt?.toMillis() || 0;
+        const bTime = b.createdAt?.toMillis() || 0;
+        return bTime - aTime;
+      });
+      
+      callback(sortedRequests);
     }, (error) => {
       console.error("❌ Error listening to friend requests:", error);
     });
@@ -367,10 +390,10 @@ export function listenToFriendRequests(userId: string, callback: (requests: Frie
  */
 export function listenToFriends(userId: string, callback: (friends: Friend[]) => void): () => void {
   try {
+    // Use a simpler query without orderBy to avoid index requirements
     const friendsQuery = query(
       collection(db, "friends"),
-      where("userId", "==", userId),
-      orderBy("addedAt", "desc")
+      where("userId", "==", userId)
     );
 
     const unsubscribe = onSnapshot(friendsQuery, (snapshot) => {
@@ -378,7 +401,15 @@ export function listenToFriends(userId: string, callback: (friends: Friend[]) =>
       snapshot.forEach((doc) => {
         friends.push({ id: doc.id, ...doc.data() } as Friend);
       });
-      callback(friends);
+      
+      // Sort in memory instead of using Firestore orderBy
+      const sortedFriends = friends.sort((a, b) => {
+        const aTime = a.addedAt?.toMillis() || 0;
+        const bTime = b.addedAt?.toMillis() || 0;
+        return bTime - aTime;
+      });
+      
+      callback(sortedFriends);
     }, (error) => {
       console.error("❌ Error listening to friends:", error);
     });
