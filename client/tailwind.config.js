@@ -1,323 +1,531 @@
-/** @type {import('tailwindcss').Config} */
-// Force rebuild - Updated with beautiful peach colors
-export default {
-  darkMode: ["class"],
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-  theme: {
-    extend: {
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
-      colors: {
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        // Enhanced Indian romantic color palette - more flirty and appealing
-        romance: {
-          25: "#fffbfb",
-          50: "#fef7f7",
-          100: "#fdeaea",
-          200: "#fad4d4",
-          300: "#f5b1b1",
-          400: "#ee8989",
-          500: "#e25d5d",
-          600: "#d14343",
-          700: "#b53535",
-          800: "#962d2d",
-          900: "#7c2828",
-          950: "#5c1f1f",
-        },
-        bollywood: {
-          25: "#fffef9",
-          50: "#fff9eb",
-          100: "#ffeec6",
-          200: "#ffdb88",
-          300: "#ffc94a",
-          400: "#ffb220",
-          500: "#f99107",
-          600: "#dd6b02",
-          700: "#b74806",
-          800: "#94370c",
-          900: "#7a2e0d",
-          950: "#4a1a06",
-        },
-        royal: {
-          25: "#fdfcff",
-          50: "#faf5ff",
-          100: "#f3e8ff",
-          200: "#e9d5ff",
-          300: "#d8b4fe",
-          400: "#c084fc",
-          500: "#a855f7",
-          600: "#9333ea",
-          700: "#7c3aed",
-          800: "#6b21a8",
-          900: "#581c87",
-          950: "#3b0764",
-        },
-        passion: {
-          25: "#fefbfc",
-          50: "#fdf2f8",
-          100: "#fce7f3",
-          200: "#fbcfe8",
-          300: "#f9a8d4",
-          400: "#f472b6",
-          500: "#ec4899",
-          600: "#db2777",
-          700: "#be185d",
-          800: "#9d174d",
-          900: "#831843",
-          950: "#4c0b2a",
-        },
-        marigold: {
-          25: "#fffefb",
-          50: "#fffbeb",
-          100: "#fef3c7",
-          200: "#fde68a",
-          300: "#fcd34d",
-          400: "#fbbf24",
-          500: "#f59e0b",
-          600: "#d97706",
-          700: "#b45309",
-          800: "#92400e",
-          900: "#78350f",
-          950: "#451a03",
-        },
-        coral: {
-          25: "#fffefe",
-          50: "#fff5f5",
-          100: "#ffe3e3",
-          200: "#ffcdcd",
-          300: "#ffa8a8",
-          400: "#ff7676",
-          500: "#ff4444",
-          600: "#ed1515",
-          700: "#c80d0d",
-          800: "#a50f0f",
-          900: "#881414",
-          950: "#4c0707",
-        },
-        saffron: {
-          25: "#fffffe",
-          50: "#fefce8",
-          100: "#fef9c3",
-          200: "#fef08a",
-          300: "#fde047",
-          400: "#facc15",
-          500: "#eab308",
-          600: "#ca8a04",
-          700: "#a16207",
-          800: "#854d0e",
-          900: "#713f12",
-          950: "#422006",
-        },
-        // New flirty Indian colors
-        sindoor: {
-          50: "#fff1f0",
-          100: "#ffe1de",
-          200: "#ffc8c2",
-          300: "#ffa199",
-          400: "#ff6b5a",
-          500: "#ff3d2b",
-          600: "#ed1c0a",
-          700: "#c8140a",
-          800: "#a5140e",
-          900: "#881813",
-        },
-        henna: {
-          50: "#fef8f0",
-          100: "#fdeee0",
-          200: "#fad9b8",
-          300: "#f6c089",
-          400: "#f19e4e",
-          500: "#ec7f26",
-          600: "#d9661c",
-          700: "#b54f1a",
-          800: "#92401b",
-          900: "#773619",
-        },
-        gulmohar: {
-          50: "#fff4ed",
-          100: "#ffe6d4",
-          200: "#ffc9a8",
-          300: "#ffa370",
-          400: "#ff7336",
-          500: "#ff4f0f",
-          600: "#f03607",
-          700: "#c72708",
-          800: "#9e220f",
-          900: "#7f1e10",
-        },
-        jasmine: {
-          50: "#fffef7",
-          100: "#fffbeb",
-          200: "#fff4c6",
-          300: "#ffe897",
-          400: "#ffd558",
-          500: "#ffbe2b",
-          600: "#f09b0a",
-          700: "#c67207",
-          800: "#9e580a",
-          900: "#7f480c",
-        },
-        mehendi: {
-          50: "#f0fdf4",
-          100: "#dcfce7",
-          200: "#bbf7d0",
-          300: "#86efac",
-          400: "#4ade80",
-          500: "#22c55e",
-          600: "#16a34a",
-          700: "#15803d",
-          800: "#166534",
-          900: "#14532d",
-        },
-        // Beautiful peach color palette for romantic UI
-        peach: {
-          25: "#fffef9",
-          50: "#fff9f0",
-          100: "#fff3e0",
-          200: "#ffe4c7",
-          300: "#ffd1a3",
-          400: "#ffb574",
-          500: "#ff9a56",
-          600: "#ff7a2b",
-          700: "#e55a1b",
-          800: "#cc4916",
-          900: "#a03d14",
-          950: "#7a2e10",
-        },
-        // Soft coral for accents
-        coral: {
-          25: "#fffefe",
-          50: "#fff7f7",
-          100: "#ffebeb",
-          200: "#ffd7d7",
-          300: "#ffb3b3",
-          400: "#ff8a8a",
-          500: "#ff6b6b",
-          600: "#ff4757",
-          700: "#ff3742",
-          800: "#e63946",
-          900: "#c92a2a",
-          950: "#a61e1e",
-        },
-        // Romantic blush
-        blush: {
-          25: "#fffbfb",
-          50: "#fff5f5",
-          100: "#ffe8e8",
-          200: "#ffd1d1",
-          300: "#ffb3b3",
-          400: "#ff8888",
-          500: "#ff6b6b",
-          600: "#fa5252",
-          700: "#f03e3e",
-          800: "#e03131",
-          900: "#c92a2a",
-          950: "#a61e1e",
-        },
-        // Soft cream
-        cream: {
-          25: "#fffffe",
-          50: "#fffcf0",
-          100: "#fff8e1",
-          200: "#fff0c4",
-          300: "#ffe69c",
-          400: "#ffd54f",
-          500: "#ffca28",
-          600: "#ffb300",
-          700: "#ff8f00",
-          800: "#ff6f00",
-          900: "#e65100",
-          950: "#bf360c",
-        },
-        rose: {
-          25: "#fef7f7",
-          50: "#fff1f2",
-          75: "#fecaca",
-          100: "#ffe4e6",
-          150: "#fda4af",
-          200: "#fecdd3",
-          300: "#fda4af",
-          400: "#fb7185",
-          500: "#f43f5e",
-          600: "#e11d48",
-          700: "#be123c",
-          800: "#9f1239",
-          900: "#881337",
-        },
-        pink: {
-          25: "#fdf2f8",
-          50: "#fdf2f8",
-          75: "#f9a8d4",
-          100: "#fce7f3",
-          150: "#f472b6",
-          200: "#fbcfe8",
-          300: "#f9a8d4",
-          400: "#f472b6",
-          500: "#ec4899",
-          600: "#db2777",
-          700: "#be185d",
-          800: "#9d174d",
-          900: "#831843",
-        },
-        purple: {
-          25: "#faf5ff",
-          50: "#faf5ff",
-          75: "#c084fc",
-          100: "#f3e8ff",
-          150: "#a855f7",
-          200: "#e9d5ff",
-          300: "#d8b4fe",
-          400: "#c084fc",
-          500: "#a855f7",
-          600: "#9333ea",
-          700: "#7c3aed",
-          800: "#6b21a8",
-          900: "#581c87",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        chart: {
-          1: "hsl(var(--chart-1))",
-          2: "hsl(var(--chart-2))",
-          3: "hsl(var(--chart-3))",
-          4: "hsl(var(--chart-4))",
-          5: "hsl(var(--chart-5))",
-        },
-      },
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "./ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import {
+  Coins,
+  Gift,
+  Play,
+  Users,
+  Crown,
+  X,
+  Star,
+  Zap,
+  Sparkles,
+  TrendingUp,
+  Calendar,
+  Video,
+  MessageCircle,
+  Target,
+  Clock,
+  Percent,
+  Shield,
+  Heart,
+  Flame,
+  Trophy,
+  Diamond,
+  AlertCircle,
+  RotateCcw,
+  ExternalLink,
+} from "lucide-react";
+import { useCoin } from "../context/CoinProvider";
+import { usePremium } from "../context/PremiumProvider";
+import RewardedAdButton from "./RewardedAdButton";
+
+interface TreasureChestProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function TreasureChest({ isOpen, onClose }: TreasureChestProps) {
+  const {
+    coins,
+    addCoins,
+    watchAd,
+    claimDailyBonus,
+    completeChat,
+    adsWatchedToday,
+    maxAdsPerDay,
+    canClaimDailyBonus,
+    currentStreak,
+    hasCompletedOnboarding,
+  } = useCoin();
+  const { isPremium } = usePremium();
+  const navigate = useNavigate();
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [showLimitedOffer, setShowLimitedOffer] = useState(true);
+  const [timeLeft, setTimeLeft] = useState(3600); // 1 hour in seconds
+  const [urgencyMessage, setUrgencyMessage] = useState("");
+
+  useEffect(() => {
+    if (isOpen) {
+      setIsAnimating(true);
+      const timer = setTimeout(() => setIsAnimating(false), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
+
+  // Timer for limited offers
+  useEffect(() => {
+    if (timeLeft > 0) {
+      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [timeLeft]);
+
+  // Urgency messages
+  useEffect(() => {
+    const messages = [
+      "⚡ Flash Sale! Don't miss out!",
+      "🔥 Limited Time Offer!",
+      "💎 Exclusive Deal Today Only!",
+      "⏰ Hurry! Sale ends soon!",
+      "🎯 Best Value Pack!",
+    ];
+    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+    setUrgencyMessage(randomMessage);
+  }, [isOpen]);
+
+  const formatTime = (seconds: number) => {
+    const hrs = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    return `${hrs.toString().padStart(2, "0")}:${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  };
+
+  if (!isOpen) return null;
+
+  // Enhanced coin packs with psychological pricing and scarcity
+  const coinPacks = [
+    {
+      id: "starter",
+      coins: 100,
+      price: "₹19",
+      originalPrice: "₹39",
+      popular: false,
+      bonus: "+0 Free!",
+      savings: "51% OFF",
+      tag: "STARTER",
+      color: "from-blue-500 to-blue-600",
+      bgGradient: "from-blue-50 to-sky-50",
+      description: "Perfect for beginners",
     },
-  },
-  plugins: [require("tailwindcss-animate"), require("tailwind-scrollbar-hide")],
-};
+    {
+      id: "popular",
+      coins: 200,
+      price: "₹29",
+      originalPrice: "₹49",
+      popular: true,
+      bonus: "+0 FREE!",
+      savings: "41% OFF",
+      tag: "MOST POPULAR",
+      color: "from-purple-500 to-pink-500",
+      bgGradient: "from-purple-50 to-pink-50",
+      description: "Best value for money",
+      badge: "💖 Loved by 89% users",
+    },
+    {
+      id: "mega",
+      coins: 800,
+      price: "₹99",
+      originalPrice: "₹199",
+      popular: false,
+      bonus: "+0 FREE!",
+      savings: "50% OFF",
+      tag: "MEGA DEAL",
+      color: "from-emerald-500 to-green-600",
+      bgGradient: "from-emerald-50 to-green-50",
+      description: "For power users",
+      badge: "🔥 Limited time",
+    },
+    {
+      id: "ultimate",
+      coins: 2000,
+      price: "₹199",
+      originalPrice: "₹399",
+      popular: false,
+      bonus: "+0 FREE!",
+      savings: "50% OFF",
+      tag: "ULTIMATE",
+      color: "from-orange-500 to-red-500",
+      bgGradient: "from-orange-50 to-red-50",
+      description: "Maximum value pack",
+      badge: "💎 VIP Special",
+      vip: true,
+    },
+  ];
+
+  const handlePurchasePack = (pack: (typeof coinPacks)[0]) => {
+    // Add purchase psychology with confirmation
+    const message = `🎉 Great choice! You're getting ${pack.coins + parseInt(pack.bonus.replace(/\D/g, ""))} coins for just ${pack.price}!\n\n💰 That's ${pack.savings} savings!\n\nConfirm purchase?`;
+
+    if (confirm(message)) {
+      const purchaseCoins = async () => {
+        try {
+          const totalCoins =
+            pack.coins + parseInt(pack.bonus.replace(/\D/g, ""));
+          const success = await addCoins(totalCoins);
+          if (success) {
+            alert(
+              `🎊 SUCCESS! ${totalCoins} coins added to your account!\n\n✨ Enjoy your enhanced chat experience!`,
+            );
+          } else {
+            alert(`❌ Purchase failed. Please try again.`);
+          }
+        } catch (error) {
+          console.error("Error purchasing coins:", error);
+          alert(`❌ Purchase failed. Please try again.`);
+        }
+      };
+
+      purchaseCoins();
+      onClose();
+    }
+  };
+
+  const earningMethods = [
+    {
+      id: "daily",
+      title: "Daily Login Bonus",
+      coins: 10,
+      icon: Calendar,
+      color: "from-peach-400 to-coral-500",
+      bgColor: "bg-gradient-to-br from-peach-50 to-coral-50",
+      description: "Open the app daily for rewards",
+      action: claimDailyBonus,
+      available: canClaimDailyBonus,
+      buttonText: canClaimDailyBonus ? "🎁 Earn +10 Coins" : "✅ Claimed Today",
+      streak: currentStreak,
+      highlight: "Earn +10",
+    },
+    {
+      id: "ads",
+      title: "Watch Rewarded Ads",
+      coins: 15,
+      icon: Play,
+      color: "from-blush-400 to-peach-500",
+      bgColor: "bg-gradient-to-br from-blush-50 to-peach-50",
+      description: `Watch ads and earn instant coins`,
+      action: watchAd,
+      available: adsWatchedToday < maxAdsPerDay,
+      buttonText:
+        adsWatchedToday < maxAdsPerDay
+          ? `🎯 Earn +15 Coins (${maxAdsPerDay - adsWatchedToday} left)`
+          : "✅ Daily Limit Reached",
+      progress: `${adsWatchedToday}/${maxAdsPerDay} today`,
+      highlight: "Earn +15",
+    },
+  ];
+
+  return (
+    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-start justify-center z-50 p-2 overflow-y-auto">
+      <Card className="w-full max-w-lg mx-auto bg-gradient-to-br from-pink-25 via-rose-25 to-pink-50 border-2 border-primary-200 shadow-3xl relative overflow-hidden my-2 min-h-fit max-h-[98vh]">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-4 left-4 w-8 h-8 bg-primary-200 rounded-full opacity-30 animate-pulse"></div>
+          <div className="absolute top-12 right-8 w-6 h-6 bg-accent-200 rounded-full opacity-40 animate-bounce"></div>
+          <div
+            className="absolute bottom-16 left-8 w-4 h-4 bg-primary-200 rounded-full opacity-25 animate-pulse"
+            style={{ animationDelay: "1s" }}
+          ></div>
+          <div
+            className="absolute bottom-8 right-4 w-5 h-5 bg-pink-200 rounded-full opacity-30 animate-bounce"
+            style={{ animationDelay: "2s" }}
+          ></div>
+        </div>
+
+        <CardHeader className="text-center relative z-10 pb-3">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onClose}
+            className="absolute right-2 top-2 p-2 text-primary-500 hover:bg-primary-100 rounded-full transition-all duration-200 hover:scale-110"
+          >
+            <X size={22} />
+          </Button>
+
+          {/* Attractive Diamond Icon */}
+          <div className="flex justify-center mb-4">
+            <div
+              className={`relative ${isAnimating ? "animate-bounce" : ""} transform hover:scale-110 transition-transform duration-300`}
+            >
+              <div className="w-24 h-24 bg-gradient-to-br from-primary-400 via-accent-500 to-primary-400 rounded-2xl relative overflow-hidden shadow-2xl border-3 border-primary-300 flex items-center justify-center">
+                <Diamond className="h-12 w-12 text-white drop-shadow-lg" />
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-black/10 rounded-2xl"></div>
+                {isAnimating && (
+                  <>
+                    <div className="absolute -top-3 -left-3 text-yellow-300 text-xl animate-ping">
+                      ✨
+                    </div>
+                    <div
+                      className="absolute -top-4 -right-2 text-primary-300 text-lg animate-ping"
+                      style={{ animationDelay: "0.2s" }}
+                    >
+                      💎
+                    </div>
+                    <div
+                      className="absolute -top-2 left-1/2 text-accent-300 text-lg animate-ping"
+                      style={{ animationDelay: "0.4s" }}
+                    >
+                      ✨
+                    </div>
+                    <div
+                      className="absolute -bottom-1 -left-2 text-pink-400 text-sm animate-ping"
+                      style={{ animationDelay: "0.6s" }}
+                    >
+                      💫
+                    </div>
+                    <div
+                      className="absolute -bottom-2 -right-1 text-primary-400 text-sm animate-ping"
+                      style={{ animationDelay: "0.8s" }}
+                    >
+                      ✨
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <CardTitle className="text-2xl font-extrabold bg-gradient-to-r from-primary-600 via-accent-600 to-primary-600 bg-clip-text text-transparent mb-2">
+            💰 Coin Store 💰
+          </CardTitle>
+
+          {/* Current Balance */}
+              <Coins className="h-5 w-5 text-peach-600 animate-pulse" />
+              <span className="font-extrabold text-lg text-peach-700">
+                {coins} Coins
+              </span>
+            </div>
+    --ring: 330 81% 70%; /* lighter pink for dark mode */
+
+          {/* Urgency Timer */}
+          {showLimitedOffer && (
+            <div className="bg-gradient-to-r from-peach-500 to-coral-500 text-white rounded-full px-4 py-2 mt-2 inline-block animate-pulse">
+              <div className="flex items-center gap-2 text-sm font-bold">
+                <Clock className="h-4 w-4" />
+                <span>{urgencyMessage}</span>
+                <span>{formatTime(timeLeft)}</span>
+              </div>
+            </div>
+          )}
+
+          {/* Spin Wheel Button with reduced bounce */}
+          <div className="mt-3">
+            <button
+              onClick={() => {
+                onClose();
+                navigate("/spin-wheel");
+              }}
+              className="bg-gradient-to-r from-peach-500 via-coral-500 to-blush-500 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              style={{ animation: "bounce 1s infinite" }}
+            >
+              <div className="flex items-center gap-2">
+                <RotateCcw className="h-5 w-5" />
+                <span>🎰 Spin & Win Coins!</span>
+                <ExternalLink className="h-4 w-4" />
+              </div>
+            </button>
+            <div className="text-xs text-peach-600 font-semibold mt-1 bg-peach-100 rounded-full px-3 py-1 inline-block">
+              ✨ Try your luck! Watch ads to win up to 50 coins! ✨
+            </div>
+          </div>
+        </CardHeader>
+
+        <CardContent className="space-y-4 relative z-10 overflow-y-auto max-h-[calc(98vh-180px)] pb-4">
+          {/* Social Proof Banner */}
+          <div className="bg-gradient-to-r from-cream-100 to-peach-100 rounded-xl p-3 border border-peach-300">
+            <div className="flex items-center gap-2 text-center justify-center">
+              <Users className="h-5 w-5 text-peach-600" />
+              <span className="text-peach-800 font-semibold text-sm">
+                🎉 <strong>2,847</strong> users bought coins today!
+              </span>
+            </div>
+          </div>
+
+          {/* Purchase Coins Section with Compelling Design */}
+          <div className="space-y-3">
+            <h3 className="font-bold text-peach-800 text-center flex items-center justify-center gap-2 text-base">
+              <div className="bg-peach-100 p-1.5 rounded-full">
+                <Crown className="h-5 w-5 text-peach-600" />
+              </div>
+              💎 Special Coin Packs
+            </h3>
+
+            <div className="grid grid-cols-2 gap-2">
+              {coinPacks.map((pack, index) => (
+                <div
+                  key={pack.id}
+                  className={`relative p-3 rounded-xl border-2 cursor-pointer transition-all duration-300 transform hover:scale-105 hover:shadow-xl ${
+                    pack.popular
+                      ? "border-peach-500 bg-gradient-to-br from-peach-50 to-coral-50 shadow-lg ring-2 ring-peach-200"
+                      : "border-gray-300 bg-white hover:border-peach-300"
+                  }`}
+                  onClick={() => handlePurchasePack(pack)}
+                >
+                  {/* Popular/VIP Badge */}
+                  {pack.popular && (
+                    <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-peach-500 to-coral-500 text-white text-xs px-2 py-1 rounded-full font-bold animate-pulse">
+                      {pack.tag} 🔥
+                    </div>
+                  )}
+
+                  {pack.vip && (
+                    <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-coral-500 to-peach-500 text-white text-xs px-2 py-1 rounded-full font-bold animate-pulse">
+                      💎 {pack.tag}
+                    </div>
+                  )}
+
+                  {/* Savings Badge */}
+                  <div className="absolute -top-1 -right-1 bg-peach-500 text-white text-xs px-2 py-1 rounded-full font-bold transform rotate-12">
+                    {pack.savings}
+                  </div>
+
+                  <div className="text-center">
+                    {/* Coins Amount */}
+                    <div className="text-xl font-bold text-peach-700 mb-1">
+                      {pack.coins}
+                    </div>
+                    <div className="text-xs text-gray-600 mb-2">base coins</div>
+
+                    {/* Bonus Display */}
+                    {pack.bonus && (
+                      <div className="text-xs text-cream-600 font-bold mb-2 bg-cream-100 rounded-full px-2 py-1 animate-pulse">
+                        {pack.bonus}
+                      </div>
+                    )}
+
+                    {/* Pricing */}
+                    <div className="mb-2">
+                      <div className="text-xs text-gray-500 line-through">
+                        {pack.originalPrice}
+                      </div>
+                      <div className="font-bold text-lg text-gray-800">
+                        {pack.price}
+                      </div>
+                    </div>
+
+                    {/* Description */}
+                    <div className="text-xs text-gray-600 mb-2">
+                      {pack.description}
+                    </div>
+
+                    {/* User Badge */}
+                    {pack.badge && (
+                      <div className="text-xs text-peach-600 font-semibold bg-peach-100 rounded px-2 py-1">
+                        {pack.badge}
+                      </div>
+                    )}
+
+                    {/* Total Value Display */}
+                    <div className="text-xs text-cream-700 font-bold mt-2 bg-cream-50 rounded px-2 py-1">
+                      Total:{" "}
+                      {pack.coins +
+                        parseInt(pack.bonus.replace(/\D/g, "") || "0")}{" "}
+                      coins
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Enhanced Free Coins Section */}
+          <div className="space-y-3">
+            <h3 className="font-bold text-peach-800 text-center flex items-center justify-center gap-2 text-base">
+              <div className="bg-gradient-to-r from-peach-100 to-coral-100 p-2 rounded-full shadow-md">
+                <Gift className="h-6 w-6 text-peach-600" />
+              </div>
+              🎁 Free Coins - No Payment!
+            </h3>
+
+            <div className="grid grid-cols-1 gap-3">
+              {earningMethods.map((method) => (
+                <div
+                  key={method.id}
+                  className={`${method.bgColor} rounded-xl p-4 border-2 border-peach-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]`}
+                >
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={`bg-gradient-to-r ${method.color} p-2 rounded-full shadow-lg animate-pulse`}
+                      >
+                        <method.icon className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-bold text-gray-800 text-base">
+                          {method.title}
+                        </h4>
+                        <p className="text-sm text-gray-600">
+                          {method.description}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <div className="bg-gradient-to-r from-peach-500 to-coral-500 text-white px-3 py-1 rounded-full font-bold text-sm shadow-md">
+                          {method.highlight}
+                        </div>
+                        <div className="text-xs text-gray-500 mt-1">coins</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Progress or Status */}
+                  {method.progress && (
+                    <div className="mb-3">
+                      <div className="text-xs text-gray-600 mb-1">
+                        {method.progress}
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div
+                          className={`bg-gradient-to-r ${method.color} h-2 rounded-full transition-all duration-300`}
+                          style={{
+                            width: `${(adsWatchedToday / maxAdsPerDay) * 100}%`,
+                          }}
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Enhanced Action Button */}
+                  {method.id === "ads" ? (
+                    <RewardedAdButton
+                      variant="premium"
+                      disabled={!method.available}
+                      className="w-full"
+                      onRewardEarned={(amount) => {
+                        console.log(`User earned ${amount} coins from TreasureChest ad`);
+                      }}
+                    />
+                  ) : (
+                    <Button
+                      onClick={method.action}
+                      disabled={!method.available}
+                      className={`w-full font-bold py-3 rounded-xl shadow-lg transition-all duration-300 text-base transform hover:scale-105 ${
+                        method.available
+                          ? `bg-gradient-to-r ${method.color} hover:shadow-xl text-white animate-pulse`
+                          : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      }`}
+                    >
+                      {method.buttonText}
+                    </Button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Final CTA */}
+          <div className="bg-gradient-to-r from-peach-100 to-coral-100 rounded-xl p-3 border-2 border-peach-200 text-center">
+            <div className="text-peach-800 font-bold text-sm mb-1">
+              💫 Why Buy Coins?
+            </div>
+            <div className="text-peach-700 text-xs">
+              • Skip waiting times • Premium features • Unlimited chats •
+              Special filters
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}

@@ -23,8 +23,8 @@ export default function GenderFilter({
       icon: Users,
       description: "Connect with all genders",
       emoji: "👥",
-      color: "from-blue-500 to-purple-600",
-      bgColor: "bg-blue-50 hover:bg-blue-100",
+      color: "from-dating-pink-500 to-dating-rose-600",
+      bgColor: "bg-dating-pink-50 hover:bg-dating-pink-100",
     },
     {
       id: "male",
@@ -32,8 +32,8 @@ export default function GenderFilter({
       icon: User,
       description: "Connect with males only",
       emoji: "👨",
-      color: "from-cyan-500 to-blue-600",
-      bgColor: "bg-cyan-50 hover:bg-cyan-100",
+      color: "from-blue-500 to-blue-600",
+      bgColor: "bg-blue-50 hover:bg-blue-100",
     },
     {
       id: "female",
@@ -41,8 +41,8 @@ export default function GenderFilter({
       icon: User,
       description: "Connect with females only",
       emoji: "👩",
-      color: "from-pink-500 to-rose-600",
-      bgColor: "bg-pink-50 hover:bg-pink-100",
+      color: "from-dating-rose-500 to-dating-rose-600",
+      bgColor: "bg-dating-rose-50 hover:bg-dating-rose-100",
     },
   ];
 
@@ -56,11 +56,11 @@ export default function GenderFilter({
   };
 
   return (
-    <Card className="w-full bg-white/95 backdrop-blur-sm shadow-xl border-rose-200 overflow-hidden">
-      <CardHeader className="pb-3 bg-gradient-to-r from-rose-50 to-pink-50 rounded-t-lg px-4 py-4">
-        <CardTitle className="text-lg flex items-center gap-2 text-rose-700">
-          <div className="p-2 bg-rose-100 rounded-full">
-            <Users className="h-5 w-5 text-rose-600" />
+    <Card className="w-full bg-white/95 backdrop-blur-sm shadow-xl border-dating-pink-200 overflow-hidden">
+      <CardHeader className="pb-3 bg-gradient-to-r from-dating-pink-50 to-dating-rose-50 rounded-t-lg px-4 py-4">
+        <CardTitle className="text-lg flex items-center gap-2 text-dating-pink-700">
+          <div className="p-2 bg-dating-pink-100 rounded-full">
+            <Users className="h-5 w-5 text-dating-pink-600" />
           </div>
           Gender Preference 💗
         </CardTitle>
@@ -84,7 +84,7 @@ export default function GenderFilter({
               >
                 {/* Glow Effect Background */}
                 {isSelected && (
-                  <div className="absolute -inset-3 bg-gradient-to-r from-rose-400/30 via-pink-400/30 to-purple-400/30 rounded-3xl blur-xl animate-pulse"></div>
+                  <div className="absolute -inset-3 bg-gradient-to-r from-dating-pink-400/30 via-dating-rose-400/30 to-dating-pink-400/30 rounded-3xl blur-xl animate-pulse"></div>
                 )}
 
                 <Button
@@ -106,7 +106,7 @@ export default function GenderFilter({
                     <div className="relative flex-shrink-0">
                       {/* Outer Glow Ring */}
                       {isSelected && (
-                        <div className="absolute -inset-3 bg-gradient-to-r from-rose-400/20 via-pink-400/20 to-purple-400/20 rounded-full blur-xl animate-pulse"></div>
+                        <div className="absolute -inset-3 bg-gradient-to-r from-dating-pink-400/20 via-dating-rose-400/20 to-dating-pink-400/20 rounded-full blur-xl animate-pulse"></div>
                       )}
 
                       {/* Main Avatar */}
@@ -185,33 +185,33 @@ export default function GenderFilter({
         {!isPremium && (
           <div className="mt-10 relative group animate-fade-in-up">
             {/* Extreme Multiple Layer Background Blur Effect */}
-            <div className="absolute -inset-8 bg-gradient-to-r from-purple-500/15 via-pink-500/15 to-orange-500/15 backdrop-blur-2xl rounded-3xl animate-pulse opacity-80"></div>
+            <div className="absolute -inset-8 bg-gradient-to-r from-dating-pink-500/15 via-dating-rose-500/15 to-dating-pink-500/15 backdrop-blur-2xl rounded-3xl animate-pulse opacity-80"></div>
             <div
-              className="absolute -inset-6 bg-gradient-to-r from-purple-400/25 via-pink-400/25 to-orange-400/25 backdrop-blur-xl rounded-3xl animate-pulse"
+              className="absolute -inset-6 bg-gradient-to-r from-dating-pink-400/25 via-dating-rose-400/25 to-dating-pink-400/25 backdrop-blur-xl rounded-3xl animate-pulse"
               style={{ animationDelay: "0.5s" }}
             ></div>
-            <div className="absolute -inset-4 bg-gradient-to-r from-purple-300/35 via-pink-300/35 to-orange-300/35 backdrop-blur-lg rounded-3xl"></div>
-            <div className="absolute -inset-2 bg-gradient-to-r from-purple-200/45 via-pink-200/45 to-orange-200/45 backdrop-blur-md rounded-3xl"></div>
+            <div className="absolute -inset-4 bg-gradient-to-r from-dating-pink-300/35 via-dating-rose-300/35 to-dating-pink-300/35 backdrop-blur-lg rounded-3xl"></div>
+            <div className="absolute -inset-2 bg-gradient-to-r from-dating-pink-200/45 via-dating-rose-200/45 to-dating-pink-200/45 backdrop-blur-md rounded-3xl"></div>
             <div className="absolute -inset-1 bg-gradient-to-r from-white/20 via-white/10 to-white/20 backdrop-blur-sm rounded-3xl"></div>
 
             {/* Outer Glow Ring */}
-            <div className="absolute -inset-3 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 rounded-3xl opacity-20 blur-xl animate-pulse"></div>
+            <div className="absolute -inset-3 bg-gradient-to-r from-dating-pink-500 via-dating-rose-500 to-dating-pink-500 rounded-3xl opacity-20 blur-xl animate-pulse"></div>
 
             {/* Main Premium Card */}
-            <div className="relative bg-gradient-to-br from-purple-600 via-pink-600 to-orange-600 p-8 rounded-3xl shadow-2xl border-3 border-white/60 overflow-hidden group-hover:scale-105 transition-all duration-500">
+            <div className="relative bg-gradient-to-br from-dating-pink-600 via-dating-rose-600 to-dating-pink-600 p-8 rounded-3xl shadow-2xl border-3 border-white/60 overflow-hidden group-hover:scale-105 transition-all duration-500">
               {/* Multiple Animated Backgrounds */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 animate-shimmer"></div>
-              <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-purple-500/10 animate-pulse"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-dating-pink-500/10 animate-pulse"></div>
 
               {/* Floating Decorative Elements */}
               <div className="absolute -top-3 -left-3 w-6 h-6 bg-yellow-400 rounded-full animate-bounce opacity-80"></div>
-              <div className="absolute -top-2 -right-4 w-4 h-4 bg-pink-300 rounded-full animate-pulse opacity-70"></div>
+              <div className="absolute -top-2 -right-4 w-4 h-4 bg-dating-rose-300 rounded-full animate-pulse opacity-70"></div>
               <div
                 className="absolute -bottom-3 -left-4 w-5 h-5 bg-orange-400 rounded-full animate-bounce opacity-75"
                 style={{ animationDelay: "0.5s" }}
               ></div>
               <div
-                className="absolute -bottom-2 -right-3 w-7 h-7 bg-purple-300 rounded-full animate-pulse opacity-60"
+                className="absolute -bottom-2 -right-3 w-7 h-7 bg-dating-pink-300 rounded-full animate-pulse opacity-60"
                 style={{ animationDelay: "1s" }}
               ></div>
 
@@ -219,7 +219,7 @@ export default function GenderFilter({
               <div className="absolute top-4 right-6 text-yellow-300 text-xl animate-bounce">
                 ✨
               </div>
-              <div className="absolute bottom-4 left-6 text-pink-300 text-lg animate-pulse">
+              <div className="absolute bottom-4 left-6 text-dating-rose-300 text-lg animate-pulse">
                 ⭐
               </div>
 
@@ -253,7 +253,7 @@ export default function GenderFilter({
 
                 <Button
                   onClick={onUpgrade}
-                  className="bg-white text-purple-700 hover:bg-yellow-100 font-bold px-8 py-4 rounded-2xl shadow-2xl transform hover:scale-110 transition-all duration-300 border-3 border-yellow-300 hover:border-yellow-400 text-lg group"
+                  className="bg-white text-dating-pink-700 hover:bg-yellow-100 font-bold px-8 py-4 rounded-2xl shadow-2xl transform hover:scale-110 transition-all duration-300 border-3 border-yellow-300 hover:border-yellow-400 text-lg group"
                 >
                   <Crown className="h-5 w-5 mr-2 text-yellow-600 group-hover:animate-bounce" />
                   Upgrade Now ✨

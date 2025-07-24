@@ -82,7 +82,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     <div
       style={{
         background:
-          "linear-gradient(to bottom right, #ffd1a3, #fff0c4, #ffb3b3)",
+          "linear-gradient(to bottom right, #fdf2f8, #fce7f3, #fff1f2)",
         transition: "opacity 0.5s",
       }}
       className={`fixed inset-0 z-50 flex items-center justify-center px-4 sm:px-6 lg:px-8 ${isVisible ? "opacity-100" : "opacity-0"}`}
@@ -100,21 +100,21 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
         {/* Loading animation */}
         <div className="flex items-center gap-1.5 sm:gap-2 mt-4 sm:mt-6">
           <div
-            style={{ backgroundColor: "#ff9a56" }}
+            style={{ backgroundColor: "#ec4899" }}
             className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full animate-bounce shadow-lg"
           ></div>
           <div
-            style={{ backgroundColor: "#ff6b6b", animationDelay: "0.1s" }}
+            style={{ backgroundColor: "#f43f5e", animationDelay: "0.1s" }}
             className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full animate-bounce shadow-lg"
           ></div>
           <div
-            style={{ backgroundColor: "#ff6b6b", animationDelay: "0.2s" }}
+            style={{ backgroundColor: "#ec4899", animationDelay: "0.2s" }}
             className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full animate-bounce shadow-lg"
           ></div>
         </div>
 
         <p
-          style={{ color: "#e55a1b" }}
+          style={{ color: "#be185d" }}
           className="text-base sm:text-lg lg:text-xl font-medium mt-3 sm:mt-4 animate-pulse text-center px-4"
         >
           💕 Finding your perfect match...
@@ -122,16 +122,16 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
 
         {/* Firebase Storage Connection Status */}
         {connectionStatus.showConnectionTest && (
-          <div className="mt-4 sm:mt-6 bg-white/90 backdrop-blur-sm rounded-xl p-3 sm:p-4 shadow-xl border border-passion-200 w-full max-w-sm mx-4">
+          <div className="mt-4 sm:mt-6 bg-white/90 backdrop-blur-sm rounded-xl p-3 sm:p-4 shadow-xl border border-dating-pink-200 w-full max-w-sm mx-4">
             <div className="flex items-center gap-2 sm:gap-3">
-              <Database className="w-4 h-4 sm:w-5 sm:h-5 text-passion-600 flex-shrink-0" />
+              <Database className="w-4 h-4 sm:w-5 sm:h-5 text-dating-pink-600 flex-shrink-0" />
               <span className="font-semibold text-romance-800 text-sm sm:text-base">
                 Firebase Storage
               </span>
 
               {connectionStatus.isTestingConnection ? (
                 <div className="flex items-center gap-1.5 sm:gap-2 ml-auto">
-                  <div className="w-3 h-3 sm:w-4 sm:h-4 border-2 border-passion-300 border-t-passion-600 rounded-full animate-spin"></div>
+                  <div className="w-3 h-3 sm:w-4 sm:h-4 border-2 border-dating-pink-300 border-t-dating-pink-600 rounded-full animate-spin"></div>
                   <span className="text-xs sm:text-sm text-romance-700">
                     Testing...
                   </span>

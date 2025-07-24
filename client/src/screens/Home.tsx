@@ -207,8 +207,8 @@ export default function Home() {
       <UltraPageTransition>
         <main className={`flex flex-col min-h-screen w-full relative ${
           isUltraPremium()
-            ? 'bg-rose-50/30'
-            : 'bg-gray-50'
+            ? 'bg-gradient-to-br from-dating-background-light via-pink-50 to-rose-50'
+            : 'bg-gradient-to-br from-dating-background-light via-pink-50 to-rose-50'
         }`}>
         {/* Mobile App Content Container */}
         <div className="flex-1 px-4 py-6 space-y-6">
@@ -216,28 +216,28 @@ export default function Home() {
           {/* User Status Card */}
           <div className={`rounded-2xl p-4 shadow-sm border ${
             isUltraPremium()
-              ? 'bg-gradient-to-br from-amber-100 to-orange-100 border-amber-200/50'
-              : 'bg-white border-gray-100'
+              ? 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30 shadow-lg'
+              : 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30 shadow-lg'
           }`}>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
                   isUltraPremium()
-                    ? 'bg-gradient-to-r from-rose-500 to-pink-500'
-                    : 'bg-gradient-to-r from-purple-600 to-pink-600'
+                    ? 'bg-gradient-to-r from-dating-pink-500 to-dating-rose-500'
+                    : 'bg-gradient-to-r from-dating-pink-500 to-dating-rose-500'
                 }`}>
                   <User className="h-6 w-6 text-white" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
                     <span className={`font-semibold ${
-                      isUltraPremium() ? 'text-amber-900' : 'text-gray-900'
+                      isUltraPremium() ? 'text-gray-900' : 'text-gray-900'
                     }`}>Welcome back!</span>
                     {isPremium && (
                       <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full ${
                         isUltraPremium()
-                          ? 'bg-gradient-to-r from-rose-500 to-pink-500'
-                          : 'bg-gradient-to-r from-purple-500 to-pink-500'
+                          ? 'bg-gradient-to-r from-dating-pink-500 to-dating-rose-500'
+                          : 'bg-gradient-to-r from-dating-pink-500 to-dating-rose-500'
                       }`}>
                         <Crown className="h-3 w-3 text-white" />
                         <span className="text-white text-xs font-bold">ULTRA+</span>
@@ -245,16 +245,16 @@ export default function Home() {
                     )}
                   </div>
                   <div className={`flex items-center gap-4 text-sm ${
-                    isUltraPremium() ? 'text-amber-700' : 'text-gray-600'
+                    isUltraPremium() ? 'text-gray-600' : 'text-gray-600'
                   }`}>
                     <div className="flex items-center gap-1">
                       <Coins className={`h-4 w-4 ${
-                        isUltraPremium() ? 'text-amber-600' : 'text-yellow-500'
+                        isUltraPremium() ? 'text-yellow-500' : 'text-yellow-500'
                       }`} />
                       <span className="font-medium">{coinsLoading ? "..." : coins}</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <div className="w-2 h-2 bg-rose-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-dating-pink-500 rounded-full"></div>
                       <span>Online</span>
                     </div>
                   </div>
@@ -267,8 +267,8 @@ export default function Home() {
                 }}
                 className={`p-2 rounded-lg transition-colors ${
                   isUltraPremium()
-                    ? 'bg-amber-200/50 hover:bg-amber-200 text-amber-700'
-                    : 'bg-gray-100 hover:bg-gray-200 text-gray-600'
+                    ? 'bg-dating-pink-100/50 hover:bg-dating-pink-200 text-dating-pink-700'
+                    : 'bg-dating-pink-100/50 hover:bg-dating-pink-200 text-dating-pink-700'
                 }`}
               >
                 <Settings className="h-5 w-5" />
@@ -279,8 +279,8 @@ export default function Home() {
           {/* Main Action Card */}
           <div className={`rounded-2xl p-6 text-white shadow-lg ${
             isUltraPremium()
-              ? 'bg-gradient-to-br from-amber-700 via-orange-600 to-red-500'
-              : 'bg-gradient-to-br from-purple-600 to-pink-600'
+              ? 'bg-gradient-to-br from-dating-pink-500 via-dating-pink-600 to-dating-rose-600'
+              : 'bg-gradient-to-br from-dating-pink-500 via-dating-pink-600 to-dating-rose-600'
           }`}>
             <div className="text-center space-y-4">
               <div className="flex justify-center">
@@ -295,8 +295,8 @@ export default function Home() {
               <Button
                 className={`w-full py-4 rounded-xl font-semibold text-lg shadow-lg touch-action-manipulation transition-all duration-200 active:scale-95 ${
                   isUltraPremium()
-                    ? 'bg-white text-amber-700 hover:bg-amber-50'
-                    : 'bg-white text-purple-600 hover:bg-gray-100'
+                    ? 'bg-white text-dating-pink-600 hover:bg-dating-pink-50'
+                    : 'bg-white text-dating-pink-600 hover:bg-dating-pink-50'
                 }`}
                 onClick={handleStartCall}
                 disabled={isConnecting}
@@ -304,8 +304,8 @@ export default function Home() {
                 {isConnecting ? (
                   <div className="flex items-center justify-center gap-2">
                     <div className={`w-5 h-5 border-2 border-t-transparent rounded-full animate-spin ${
-                      isUltraPremium() ? 'border-amber-700' : 'border-purple-600'
-                    }`}></div>
+                      isUltraPremium() ? 'border-primary-600' : 'border-primary-600'
+                    } border-dating-pink-600`}></div>
                     <span>Finding match...</span>
                   </div>
                 ) : (
@@ -322,11 +322,11 @@ export default function Home() {
           {/* Preferences Card */}
           <div className={`rounded-2xl p-4 shadow-sm border ${
             isUltraPremium()
-              ? 'bg-gradient-to-br from-rose-50 to-pink-50 border-rose-200/50'
-              : 'bg-white border-gray-100'
+              ? 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30'
+              : 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30'
           }`}>
             <h3 className={`font-semibold mb-3 ${
-              isUltraPremium() ? 'text-rose-900' : 'text-gray-900'
+              isUltraPremium() ? 'text-gray-900' : 'text-gray-900'
             }`}>Chat Preferences</h3>
             <GenderFilter
               isPremium={isPremium}
@@ -346,24 +346,24 @@ export default function Home() {
               }}
               className={`rounded-xl p-4 shadow-sm border hover:shadow-md transition-all active:scale-95 cursor-pointer ${
                 isUltraPremium()
-                  ? 'bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200/50'
-                  : 'bg-white border-gray-100'
+                  ? 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30'
+                  : 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30'
               }`}
             >
               <div className="text-center space-y-2">
                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center mx-auto ${
                   isUltraPremium()
-                    ? 'bg-rose-100 text-rose-600'
-                    : 'bg-rose-100 text-rose-600'
+                    ? 'bg-dating-pink-100 text-dating-pink-600'
+                    : 'bg-dating-pink-100 text-dating-pink-600'
                 }`}>
                   <Users className="h-6 w-6" />
                 </div>
                 <div>
                   <h4 className={`font-semibold ${
-                    isUltraPremium() ? 'text-amber-900' : 'text-gray-900'
+                    isUltraPremium() ? 'text-gray-900' : 'text-gray-900'
                   }`}>Friends</h4>
                   <p className={`text-xs ${
-                    isUltraPremium() ? 'text-amber-700' : 'text-gray-600'
+                    isUltraPremium() ? 'text-gray-600' : 'text-gray-600'
                   }`}>Connect with buddies</p>
                 </div>
               </div>
@@ -376,24 +376,24 @@ export default function Home() {
               }}
               className={`rounded-xl p-4 shadow-sm border hover:shadow-md transition-all active:scale-95 cursor-pointer ${
                 isUltraPremium()
-                  ? 'bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200/50'
-                  : 'bg-white border-gray-100'
+                  ? 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30'
+                  : 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30'
               }`}
             >
               <div className="text-center space-y-2">
                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center mx-auto ${
                   isUltraPremium()
-                    ? 'bg-pink-100 text-pink-600'
-                    : 'bg-pink-100 text-pink-600'
+                    ? 'bg-dating-rose-100 text-dating-rose-600'
+                    : 'bg-dating-rose-100 text-dating-rose-600'
                 }`}>
                   <Bot className="h-6 w-6" />
                 </div>
                 <div>
                   <h4 className={`font-semibold ${
-                    isUltraPremium() ? 'text-amber-900' : 'text-gray-900'
+                    isUltraPremium() ? 'text-gray-900' : 'text-gray-900'
                   }`}>AI Chat</h4>
                   <p className={`text-xs ${
-                    isUltraPremium() ? 'text-amber-700' : 'text-gray-600'
+                    isUltraPremium() ? 'text-gray-600' : 'text-gray-600'
                   }`}>Smart conversations</p>
                 </div>
               </div>
@@ -403,8 +403,8 @@ export default function Home() {
               onClick={handleVoiceChat}
               className={`rounded-xl p-4 shadow-sm border hover:shadow-md transition-all active:scale-95 cursor-pointer ${
                 isUltraPremium()
-                  ? 'bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200/50'
-                  : 'bg-white border-gray-100'
+                  ? 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30'
+                  : 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30'
               }`}
             >
               <div className="text-center space-y-2">
@@ -417,10 +417,10 @@ export default function Home() {
                 </div>
                 <div>
                   <h4 className={`font-semibold ${
-                    isUltraPremium() ? 'text-amber-900' : 'text-gray-900'
+                    isUltraPremium() ? 'text-gray-900' : 'text-gray-900'
                   }`}>Voice</h4>
                   <p className={`text-xs ${
-                    isUltraPremium() ? 'text-amber-700' : 'text-gray-600'
+                    isUltraPremium() ? 'text-gray-600' : 'text-gray-600'
                   }`}>Audio only chats</p>
                 </div>
               </div>
@@ -433,24 +433,24 @@ export default function Home() {
               }}
               className={`rounded-xl p-4 shadow-sm border hover:shadow-md transition-all active:scale-95 cursor-pointer ${
                 isUltraPremium()
-                  ? 'bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200/50'
-                  : 'bg-white border-gray-100'
+                  ? 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30'
+                  : 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30'
               }`}
             >
               <div className="text-center space-y-2">
                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center mx-auto ${
                   isUltraPremium()
-                    ? 'bg-amber-100 text-amber-600'
-                    : 'bg-amber-100 text-amber-600'
+                    ? 'bg-yellow-100 text-yellow-600'
+                    : 'bg-yellow-100 text-yellow-600'
                 }`}>
                   <Coins className="h-6 w-6" />
                 </div>
                 <div>
                   <h4 className={`font-semibold ${
-                    isUltraPremium() ? 'text-amber-900' : 'text-gray-900'
+                    isUltraPremium() ? 'text-gray-900' : 'text-gray-900'
                   }`}>Coins</h4>
                   <p className={`text-xs ${
-                    isUltraPremium() ? 'text-amber-700' : 'text-gray-600'
+                    isUltraPremium() ? 'text-gray-600' : 'text-gray-600'
                   }`}>Earn rewards</p>
                 </div>
               </div>
@@ -461,8 +461,8 @@ export default function Home() {
           {!isPremium && (
             <div className={`rounded-2xl p-4 text-white ${
               isUltraPremium()
-                ? 'bg-gradient-to-r from-rose-400 to-pink-500'
-                : 'bg-gradient-to-r from-yellow-400 to-orange-500'
+                ? 'bg-gradient-to-r from-dating-pink-500 to-dating-rose-500'
+                : 'bg-gradient-to-r from-dating-pink-500 to-dating-rose-500'
             }`}>
               <div className="flex items-center justify-between">
                 <div className="flex-1">
@@ -493,7 +493,7 @@ export default function Home() {
                 alert('🎉 ULTRA+ activated! Experience the luxury!');
                 window.location.reload();
               }}
-              className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 active:scale-95 text-white py-4 px-5 rounded-2xl shadow-lg transition-all duration-200 text-center touch-action-manipulation"
+              className="w-full bg-gradient-to-r from-dating-pink-600 to-dating-rose-600 hover:from-dating-pink-700 hover:to-dating-rose-700 active:scale-95 text-white py-4 px-5 rounded-2xl shadow-lg transition-all duration-200 text-center touch-action-manipulation"
             >
               <Crown className="h-5 w-5 mr-2" />
               🧪 Try ULTRA+ Experience (Test Mode)

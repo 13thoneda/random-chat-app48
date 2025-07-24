@@ -1,15 +1,15 @@
-/* Romantic Indian-inspired theme styles for AjnabiCam */
+/* Modern dating app theme styles for AjnabiCam - inspired by contemporary dating apps */
 
-/* Custom animations for romantic theme */
+/* Custom animations for modern dating app theme */
 @keyframes romantic-glow {
   0%,
   100% {
-    box-shadow: 0 0 20px rgba(236, 72, 153, 0.3);
+    box-shadow: 0 0 20px rgba(236, 72, 153, 0.4);
   }
   50% {
     box-shadow:
-      0 0 30px rgba(236, 72, 153, 0.6),
-      0 0 40px rgba(219, 39, 119, 0.4);
+      0 0 30px rgba(236, 72, 153, 0.7),
+      0 0 40px rgba(244, 63, 94, 0.5);
   }
 }
 
@@ -163,40 +163,40 @@
   }
 }
 
-/* Enhanced romantic gradient backgrounds - more flirty and Indian-inspired */
+/* Enhanced modern dating app gradient backgrounds */
 .romantic-gradient {
   background: linear-gradient(
     135deg,
-    #fff1f0 0%,
-    #ffe1de 15%,
-    #ffc8c2 30%,
-    #ffa199 50%,
-    #ff6b5a 75%,
-    #ff3d2b 100%
+    #fdf2f8 0%,
+    #fce7f3 20%,
+    #fbcfe8 40%,
+    #f9a8d4 60%,
+    #f472b6 80%,
+    #ec4899 100%
   );
 }
 
 .bollywood-gradient {
   background: linear-gradient(
     135deg,
-    #fffef7 0%,
-    #fff4c6 20%,
-    #ffe897 40%,
-    #ffd558 60%,
-    #ffbe2b 80%,
-    #f09b0a 100%
+    #fff1f2 0%,
+    #ffe4e6 20%,
+    #fecdd3 40%,
+    #fda4af 60%,
+    #fb7185 80%,
+    #f43f5e 100%
   );
 }
 
 .royal-gradient {
   background: linear-gradient(
     135deg,
-    #fdfcff 0%,
-    #f3e8ff 20%,
-    #e9d5ff 40%,
-    #d8b4fe 60%,
-    #c084fc 80%,
-    #a855f7 100%
+    #fdf2f8 0%,
+    #fce7f3 20%,
+    #fbcfe8 40%,
+    #f9a8d4 60%,
+    #f472b6 80%,
+    #ec4899 100%
   );
 }
 
@@ -244,7 +244,7 @@
   );
 }
 
-/* Romantic text effects */
+/* Modern dating app text effects */
 .romantic-text-glow {
   text-shadow:
     0 0 10px rgba(236, 72, 153, 0.5),
@@ -252,11 +252,11 @@
     0 0 30px rgba(236, 72, 153, 0.2);
 }
 
-.bollywood-text-glow {
+.dating-text-glow {
   text-shadow:
-    0 0 10px rgba(249, 145, 7, 0.5),
-    0 0 20px rgba(249, 145, 7, 0.3),
-    0 0 30px rgba(249, 145, 7, 0.2);
+    0 0 10px rgba(244, 63, 94, 0.5),
+    0 0 20px rgba(244, 63, 94, 0.3),
+    0 0 30px rgba(244, 63, 94, 0.2);
 }
 
 /* ULTRA+ Premium Animation Classes */
@@ -297,28 +297,28 @@
   animation: ultra-particle 4s ease-in-out infinite;
 }
 
-/* Enhanced button styles with Indian flair - more flirty and romantic */
+/* Enhanced button styles with modern dating app flair */
 .romantic-button {
-  background: linear-gradient(45deg, #ff3d2b, #ff6b5a, #ffa199);
+  background: linear-gradient(45deg, #ec4899, #f472b6, #f9a8d4);
   background-size: 200% 200%;
   animation: bollywood-shimmer 2s ease-in-out infinite;
   border: 2px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 12px 30px rgba(255, 61, 43, 0.4);
+  box-shadow: 0 12px 30px rgba(236, 72, 153, 0.4);
   transition: all 0.3s ease;
 }
 
 .romantic-button:hover {
   animation: romantic-glow 1.5s ease-in-out infinite;
   transform: translateY(-3px) scale(1.08);
-  box-shadow: 0 16px 35px rgba(255, 61, 43, 0.5);
+  box-shadow: 0 16px 35px rgba(236, 72, 153, 0.5);
 }
 
-.bollywood-button {
-  background: linear-gradient(45deg, #ffbe2b, #ffd558, #ffe897);
+.dating-button {
+  background: linear-gradient(45deg, #f43f5e, #fb7185, #fda4af);
   background-size: 200% 200%;
   animation: bollywood-shimmer 2s ease-in-out infinite;
   border: 2px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 12px 30px rgba(255, 190, 43, 0.4);
+  box-shadow: 0 12px 30px rgba(244, 63, 94, 0.4);
 }
 
 .sindoor-button {
@@ -345,37 +345,37 @@
   box-shadow: 0 12px 30px rgba(255, 79, 15, 0.4);
 }
 
-/* Card styles with romantic theme */
+/* Card styles with modern dating app theme */
 .romantic-card {
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.9) 0%,
-    rgba(253, 242, 248, 0.9) 50%,
-    rgba(252, 231, 243, 0.9) 100%
+    rgba(253, 242, 248, 0.95) 50%,
+    rgba(252, 231, 243, 0.95) 100%
   );
   backdrop-filter: blur(10px);
   border: 1px solid rgba(236, 72, 153, 0.2);
   box-shadow: 0 8px 32px rgba(236, 72, 153, 0.1);
 }
 
-.bollywood-card {
+.dating-card {
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.9) 0%,
-    rgba(255, 249, 235, 0.9) 50%,
-    rgba(255, 238, 198, 0.9) 100%
+    rgba(255, 241, 242, 0.95) 50%,
+    rgba(255, 228, 230, 0.95) 100%
   );
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(245, 158, 11, 0.2);
-  box-shadow: 0 8px 32px rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(244, 63, 94, 0.2);
+  box-shadow: 0 8px 32px rgba(244, 63, 94, 0.1);
 }
 
-/* Input styles with romantic theme */
+/* Input styles with modern dating app theme */
 .romantic-input {
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.9) 0%,
-    rgba(253, 242, 248, 0.7) 100%
+    rgba(253, 242, 248, 0.8) 100%
   );
   border: 2px solid rgba(236, 72, 153, 0.2);
   box-shadow: 0 4px 15px rgba(236, 72, 153, 0.1);
@@ -390,7 +390,7 @@
   animation: romantic-glow 2s ease-in-out infinite;
 }
 
-/* Profile image frame with Indian jewelry inspiration */
+/* Profile image frame with modern dating app styling */
 .jewelry-frame {
   position: relative;
 }
@@ -402,11 +402,11 @@
   border-radius: 50%;
   background: conic-gradient(
     from 0deg,
-    #f59e0b,
     #ec4899,
-    #a855f7,
-    #10b981,
-    #f59e0b
+    #f472b6,
+    #f43f5e,
+    #fb7185,
+    #ec4899
   );
   animation: romantic-glow 3s ease-in-out infinite;
   z-index: -1;
@@ -661,24 +661,25 @@
   border: 2px solid white;
 }
 
-/* Enhanced utility classes for quick application - more flirty Indian colors */
-.text-romantic {
-  color: #ff3d2b;
+/* Enhanced utility classes for quick application - modern dating app colors */
+.text-dating-pink {
+  color: #ec4899;
 }
-.text-bollywood {
-  color: #ffbe2b;
+.text-dating-rose {
+  color: #f43f5e;
 }
-.text-royal {
-  color: #a855f7;
+.text-dating-accent {
+  color: #fb7185;
 }
-.text-passion {
-  color: #ff6b5a;
+
+.bg-dating-pink {
+  background-color: #ec4899;
 }
-.text-marigold {
-  color: #ffd558;
+.bg-dating-rose {
+  background-color: #f43f5e;
 }
-.text-coral {
-  color: #ff4444;
+.bg-dating-accent {
+  background-color: #fb7185;
 }
 .text-saffron {
   color: #ffbe2b;

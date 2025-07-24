@@ -112,7 +112,7 @@ export default function RewardedAdButton({
       <Button
         {...buttonProps}
         size="sm"
-        className={`bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white ${className}`}
+        className={`bg-gradient-to-r from-dating-pink-500 via-dating-rose-500 to-dating-pink-600 hover:from-dating-pink-600 hover:via-dating-rose-600 hover:to-dating-pink-700 text-white ${className}`}
       >
         {isWatching ? (
           <>
@@ -142,8 +142,8 @@ export default function RewardedAdButton({
         {...buttonProps}
         className={`${
           isUnityReady
-            ? 'bg-gradient-to-r from-orange-500 via-red-500 to-purple-500 hover:from-orange-600 hover:via-red-600 hover:to-purple-600'
-            : 'bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 hover:from-yellow-600 hover:via-orange-600 hover:to-red-600'
+            ? 'bg-gradient-to-r from-dating-pink-500 via-dating-rose-500 to-dating-pink-600 hover:from-dating-pink-600 hover:via-dating-rose-600 hover:to-dating-pink-700'
+            : 'bg-gradient-to-r from-dating-pink-500 via-dating-rose-500 to-dating-pink-600 hover:from-dating-pink-600 hover:via-dating-rose-600 hover:to-dating-pink-700'
         } text-white font-bold py-4 px-6 rounded-xl shadow-lg transform transition-all duration-200 hover:scale-105 ${className}`}
       >
         {isWatching ? (
@@ -185,8 +185,8 @@ export default function RewardedAdButton({
       {...buttonProps}
       className={`${
         isUnityReady
-          ? 'bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600'
-          : 'bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600'
+          ? 'bg-gradient-to-r from-dating-pink-500 to-dating-rose-500 hover:from-dating-pink-600 hover:to-dating-rose-600'
+          : 'bg-gradient-to-r from-dating-pink-500 to-dating-rose-500 hover:from-dating-pink-600 hover:to-dating-rose-600'
       } text-white font-semibold py-3 px-6 rounded-lg shadow-md transition-all duration-200 ${className}`}
     >
       {isWatching ? (
