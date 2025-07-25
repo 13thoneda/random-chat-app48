@@ -1,9 +1,4 @@
 import { useEffect, useState } from "react";
-import { CheckCircle, XCircle, Wifi, Database } from "lucide-react";
-import {
-  testFirebaseStorageConnection,
-  ConnectionTestResult,
-} from "../lib/connectionTest";
 
 interface SplashScreenProps {
   onComplete: () => void;
@@ -11,54 +6,11 @@ interface SplashScreenProps {
 
 export default function SplashScreen({ onComplete }: SplashScreenProps) {
   const [isVisible, setIsVisible] = useState(true);
-  console.log("SplashScreen rendered");
-  const [connectionStatus, setConnectionStatus] = useState<{
-    isTestingConnection: boolean;
-    connectionResult: ConnectionTestResult | null;
-    showConnectionTest: boolean;
-  }>({
-    isTestingConnection: false,
-    connectionResult: null,
-    showConnectionTest: false,
-  });
-
+  
   useEffect(() => {
-    // Start connection test after 1 second
-    const connectionTimer = setTimeout(() => {
-      setConnectionStatus((prev) => ({
-        ...prev,
-        isTestingConnection: true,
-        showConnectionTest: true,
-      }));
-
-      testFirebaseStorageConnection()
-        .then((result) => {
-          setConnectionStatus((prev) => ({
-            ...prev,
-            isTestingConnection: false,
-            connectionResult: result,
-          }));
-        })
-        .catch((error) => {
-          setConnectionStatus((prev) => ({
-            ...prev,
-            isTestingConnection: false,
-            connectionResult: {
-              isConnected: false,
-              status: "error",
-              message: "Connection test failed",
-              details: {
-                canRead: false,
-                canWrite: false,
-                canDelete: false,
-                error: error.message,
-              },
-            },
-          }));
-        });
-    }, 1000);
-
-    // Hide splash after a reasonable time
+    console.log("SplashScreen rendered");
+    
+    // Show splash for 2 seconds then complete
     const timer = setTimeout(() => {
       console.log("SplashScreen: hiding splash after timeout");
       setIsVisible(false);
@@ -66,12 +18,9 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
         console.log("SplashScreen: calling onComplete");
         onComplete();
       }, 300); // Smooth transition
-    }, 2000); // Show splash for 2 seconds
+    }, 2000);
 
-    return () => {
-      clearTimeout(timer);
-      clearTimeout(connectionTimer);
-    };
+    return () => clearTimeout(timer);
   }, [onComplete]);
 
   if (!isVisible) {
@@ -79,142 +28,24 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
   }
 
   return (
-    <div
-      style={{
-        background:
-          "linear-gradient(to bottom right, #fdf2f8, #fce7f3, #fff1f2)",
-        transition: "opacity 0.5s",
-      }}
-      className={`fixed inset-0 z-50 flex items-center justify-center px-4 sm:px-6 lg:px-8 ${isVisible ? "opacity-100" : "opacity-0"}`}
-    >
-      <div className="flex flex-col items-center justify-center animate-fade-in max-w-lg w-full">
-        <div className="relative mb-4 sm:mb-6 lg:mb-8 transform hover:scale-105 transition-transform duration-300">
-          <img
-            src="/splash-image.png"
-            alt="AjnabiCam Splash"
-            className="w-64 sm:w-72 md:w-80 lg:w-96 h-auto rounded-2xl sm:rounded-3xl shadow-2xl max-w-full"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl sm:rounded-3xl"></div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-peach-25 via-cream-50 to-blush-50">
+      <div className="text-center animate-fade-in">
+        {/* Logo */}
+        <div className="mb-8">
+          <h1 className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-peach-500 via-coral-500 to-blush-500 mb-4">
+            AjnabiCam
+          </h1>
+          <p className="text-gray-600 text-lg">Finding your perfect match...</p>
         </div>
 
         {/* Loading animation */}
-        <div className="flex items-center gap-1.5 sm:gap-2 mt-4 sm:mt-6">
-          <div
-            style={{ backgroundColor: "#ec4899" }}
-            className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full animate-bounce shadow-lg"
-          ></div>
-          <div
-            style={{ backgroundColor: "#f43f5e", animationDelay: "0.1s" }}
-            className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full animate-bounce shadow-lg"
-          ></div>
-          <div
-            style={{ backgroundColor: "#ec4899", animationDelay: "0.2s" }}
-            className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full animate-bounce shadow-lg"
-          ></div>
+        <div className="flex items-center justify-center gap-2 mb-6">
+          <div className="w-3 h-3 bg-peach-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+          <div className="w-3 h-3 bg-coral-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+          <div className="w-3 h-3 bg-blush-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
         </div>
 
-        <p
-          style={{ color: "#be185d" }}
-          className="text-base sm:text-lg lg:text-xl font-medium mt-3 sm:mt-4 animate-pulse text-center px-4"
-        >
-          💕 Finding your perfect match...
-        </p>
-
-        {/* Firebase Storage Connection Status */}
-        {connectionStatus.showConnectionTest && (
-          <div className="mt-4 sm:mt-6 bg-white/90 backdrop-blur-sm rounded-xl p-3 sm:p-4 shadow-xl border border-dating-pink-200 w-full max-w-sm mx-4">
-            <div className="flex items-center gap-2 sm:gap-3">
-              <Database className="w-4 h-4 sm:w-5 sm:h-5 text-dating-pink-600 flex-shrink-0" />
-              <span className="font-semibold text-romance-800 text-sm sm:text-base">
-                Firebase Storage
-              </span>
-
-              {connectionStatus.isTestingConnection ? (
-                <div className="flex items-center gap-1.5 sm:gap-2 ml-auto">
-                  <div className="w-3 h-3 sm:w-4 sm:h-4 border-2 border-dating-pink-300 border-t-dating-pink-600 rounded-full animate-spin"></div>
-                  <span className="text-xs sm:text-sm text-romance-700">
-                    Testing...
-                  </span>
-                </div>
-              ) : connectionStatus.connectionResult ? (
-                <div className="flex items-center gap-1.5 sm:gap-2 ml-auto">
-                  {connectionStatus.connectionResult.isConnected ? (
-                    <>
-                      <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-green-600" />
-                      <Wifi className="w-3 h-3 sm:w-4 sm:h-4 text-green-600" />
-                      <span className="text-xs sm:text-sm text-green-700 font-medium">
-                        Connected
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      <XCircle className="w-3 h-3 sm:w-4 sm:h-4 text-red-600" />
-                      <span className="text-xs sm:text-sm text-red-700 font-medium">
-                        Failed
-                      </span>
-                    </>
-                  )}
-                </div>
-              ) : null}
-            </div>
-
-            {/* Connection result message */}
-            {connectionStatus.connectionResult && (
-              <p
-                className={`text-xs sm:text-sm mt-2 ${
-                  connectionStatus.connectionResult.isConnected
-                    ? "text-green-600"
-                    : "text-red-600"
-                }`}
-              >
-                {connectionStatus.connectionResult.message}
-              </p>
-            )}
-
-            {/* Connection capabilities */}
-            {connectionStatus.connectionResult?.details &&
-              !connectionStatus.isTestingConnection && (
-                <div className="flex flex-wrap gap-2 sm:gap-3 mt-2 text-xs">
-                  <span
-                    className={`flex items-center gap-1 ${
-                      connectionStatus.connectionResult.details.canWrite
-                        ? "text-green-600"
-                        : "text-red-600"
-                    }`}
-                  >
-                    {connectionStatus.connectionResult.details.canWrite
-                      ? "✓"
-                      : "✗"}{" "}
-                    Write
-                  </span>
-                  <span
-                    className={`flex items-center gap-1 ${
-                      connectionStatus.connectionResult.details.canRead
-                        ? "text-green-600"
-                        : "text-red-600"
-                    }`}
-                  >
-                    {connectionStatus.connectionResult.details.canRead
-                      ? "✓"
-                      : "✗"}{" "}
-                    Read
-                  </span>
-                  <span
-                    className={`flex items-center gap-1 ${
-                      connectionStatus.connectionResult.details.canDelete
-                        ? "text-green-600"
-                        : "text-red-600"
-                    }`}
-                  >
-                    {connectionStatus.connectionResult.details.canDelete
-                      ? "✓"
-                      : "✗"}{" "}
-                    Delete
-                  </span>
-                </div>
-              )}
-          </div>
-        )}
+        <p className="text-peach-600 font-medium">💕 Welcome to your romantic journey</p>
       </div>
     </div>
   );
