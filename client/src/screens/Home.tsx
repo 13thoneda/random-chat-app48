@@ -160,8 +160,10 @@ export default function Home() {
           </div>
         )}
 
-        {/* Banner Ad */}
-        <BannerAd adUnitId={adUnitIds[currentAdIndex]} />
+        {/* Banner Ad Placeholder */}
+        <div className="bg-gradient-to-r from-pink-100 to-purple-100 rounded-2xl p-4 text-center">
+          <p className="text-gray-600 text-sm">Advertisement Space</p>
+        </div>
 
         {/* Online Users Counter */}
         <div className="bg-white rounded-2xl p-4 shadow-sm border border-peach-100">
