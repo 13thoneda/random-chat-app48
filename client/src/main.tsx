@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";
 import "./index.css";
-import TestApp from "./TestApp";
+import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { SocketProvider } from "./context/SocketProvider.tsx";
 
