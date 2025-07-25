@@ -270,8 +270,14 @@ export default function Home() {
           </button>
         </div>
 
-        {/* Rewarded Ad Button */}
-        <RewardedAdButton />
+        {/* Rewarded Ad Placeholder */}
+        <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl p-4 text-white text-center">
+          <h3 className="font-bold mb-2">🎁 Watch & Earn</h3>
+          <p className="text-sm opacity-90 mb-3">Watch a short video to earn coins</p>
+          <button className="bg-white text-emerald-600 px-6 py-2 rounded-xl font-semibold">
+            Earn +25 Coins
+          </button>
+        </div>
 
         {/* Stats */}
         <div className="grid grid-cols-3 gap-4">
