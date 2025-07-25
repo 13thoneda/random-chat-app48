@@ -31,11 +31,7 @@ import PWAInstallPrompt from "./components/PWAInstallPrompt";
 
 import { useNavigate } from "react-router-dom";
 
-import { onAuthStateChanged, signInAnonymously } from "firebase/auth";
-import { auth } from "./firebaseConfig";
-import { ensureUserDocumentExists } from "./lib/firestoreUtils";
-import { unityAdsService } from "./lib/unityAdsService";
-import { adMobService } from "./lib/adMobMediationService";
+// Firebase imports temporarily removed to fix React issues
 
 // Loading component
 function LoadingScreen() {
