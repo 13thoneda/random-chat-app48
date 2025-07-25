@@ -23,6 +23,7 @@ import {
   Bot,
 } from "lucide-react";
 // Problematic components temporarily removed
+import BottomNavBar from "../components/BottomNavBar";
 import { usePremium } from "../context/PremiumProvider";
 import { useCoin } from "../context/CoinProvider";
 import { useLanguage } from "../context/LanguageProvider";
