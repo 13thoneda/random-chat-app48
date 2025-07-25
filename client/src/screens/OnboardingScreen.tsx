@@ -180,32 +180,26 @@ export default function OnboardingScreen() {
 
   const handleSkip = async () => {
     if (isLoading) return;
-    
-    setIsLoading(true);
-    
-    try {
-      const user = auth.currentUser;
-      if (!user) {
-        throw new Error('No authenticated user found');
-      }
 
-      // Save minimal data to Firestore and mark onboarding as complete
-      const userDocRef = doc(db, "users", user.uid);
-      await setDoc(userDocRef, {
+    setIsLoading(true);
+
+    try {
+      // Simplified skip - just save to localStorage for now
+      const userData = {
         username: 'User',
         gender: 'other',
         bio: '',
-        profileImageUrl: '', // No image for skipped onboarding
-        additionalImages: [],
         language,
         onboardingComplete: true,
-        coins: 100, // Initialize with coins
-        createdAt: new Date(),
-        updatedAt: new Date()
-      }, { merge: true });
+        coins: 100,
+        createdAt: new Date().toISOString()
+      };
 
-      console.log('User skipped onboarding, minimal data saved to Firestore');
-      navigate('/');
+      localStorage.setItem('ajnabicam_user', JSON.stringify(userData));
+      console.log('User skipped onboarding, data saved to localStorage');
+
+      // Navigate to home
+      navigate('/home');
     } catch (error) {
       console.error('Error saving skip data:', error);
       alert('Error completing setup. Please try again.');
