@@ -126,7 +126,7 @@ export default function Home() {
             <h1 className="text-xl font-bold bg-gradient-to-r from-peach-600 to-coral-600 bg-clip-text text-transparent">
               AjnabiCam
             </h1>
-            {isPremium && <PremiumBadge />}
+            {isPremium && <span className="text-xs bg-gold-100 text-gold-800 px-2 py-1 rounded-full">PREMIUM</span>}
           </div>
           
           <div className="flex items-center gap-3">
