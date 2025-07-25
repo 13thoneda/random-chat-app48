@@ -41,13 +41,7 @@ createRoot(document.getElementById("root")!).render(
             <CoinProvider>
               <FriendsProvider>
                 <BrowserRouter>
-                  <ErrorBoundary FallbackComponent={ErrorFallback}>
-                    <SocketProvider>
-                      <ErrorBoundary FallbackComponent={ErrorFallback}>
-                        <App />
-                      </ErrorBoundary>
-                    </SocketProvider>
-                  </ErrorBoundary>
+                  <SimpleApp />
                 </BrowserRouter>
               </FriendsProvider>
             </CoinProvider>
