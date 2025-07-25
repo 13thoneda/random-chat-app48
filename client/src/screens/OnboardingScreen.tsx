@@ -29,7 +29,7 @@ export default function OnboardingScreen() {
   const [uploadProgress, setUploadProgress] = useState(0);
   const { language, setLanguage, t } = useLanguage();
   const navigate = useNavigate();
-  const auth = getAuth(firebaseApp);
+  // Auth removed for simplified version
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>, photoId: number) => {
     const file = event.target.files?.[0];
