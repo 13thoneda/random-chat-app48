@@ -142,21 +142,9 @@ export default function OnboardingScreen() {
 
         setUploadProgress(100);
         console.log('User onboarding completed, data saved to localStorage');
-        await setDoc(userDocRef, {
-          username: username.trim(),
-          gender,
-          bio: bio.trim(),
-          profileImageUrl: uploadResults.profileImage,
-          additionalImages: uploadResults.additionalImages,
-          language,
-          onboardingComplete: true,
-          coins: 100, // Initialize with coins
-          createdAt: new Date(),
-          updatedAt: new Date()
-        }, { merge: true });
 
-        setUploadProgress(100);
-        console.log('User onboarding data saved to Firestore');
+        // Navigate to home
+        navigate('/home');
         
         // Small delay to show completion
         setTimeout(() => {
