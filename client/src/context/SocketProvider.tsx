@@ -1,17 +1,9 @@
-import React, {
-  createContext,
-  ReactNode,
-  useContext,
-  useState,
-  useEffect,
-} from "react";
-import { io, Socket } from "socket.io-client";
-import MockMatchingService from "../lib/mockMatchingService";
+import React, { createContext, useContext, useState, ReactNode } from "react";
 
 interface ISocketContext {
-  socket: Socket | null;
-  setSocket: (socket: Socket | null) => void;
-  mockMatching: MockMatchingService;
+  socket: any;
+  setSocket: (socket: any) => void;
+  mockMatching: any;
   isUsingMockMode: boolean;
 }
 
@@ -25,160 +17,27 @@ export const useSocket = () => {
   return context;
 };
 
-export const SocketProvider = ({ children }: { children: ReactNode }) => {
-  const [socket, setSocket] = useState<Socket | null>(null);
-  const [isUsingMockMode, setIsUsingMockMode] = useState(false);
-  const mockMatching = MockMatchingService.getInstance();
+interface SocketProviderProps {
+  children: ReactNode;
+}
 
-  // Add error handling
-  useEffect(() => {
-    const handleError = (event: ErrorEvent) => {
-      console.error("Socket Provider Error:", event.error);
-    };
+export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
+  const [socket, setSocket] = useState<any>(null);
+  const [isUsingMockMode] = useState(true);
+  const mockMatching = {
+    findMatch: () => Promise.resolve(),
+    disconnect: () => {},
+  };
 
-    window.addEventListener('error', handleError);
-    return () => window.removeEventListener('error', handleError);
-  }, []);
-
-  useEffect(() => {
-    if (!socket) {
-      // Prioritize environment variable for socket URL
-      let socketUrl: string = import.meta.env.VITE_SOCKET_URL;
-      
-      // Fallback to dynamic URL determination if env var not set
-      if (!socketUrl) {
-        if (window.location.hostname.includes('webcontainer-api.io')) {
-          // WebContainer environment - use HTTP (not HTTPS) for WebSocket
-          const protocol = 'http';
-          const host = window.location.hostname.replace('5173', '80');
-          socketUrl = `${protocol}://${host}`;
-        } else if (window.location.hostname === "localhost") {
-          socketUrl = "http://localhost:8000";
-        } else {
-          socketUrl = `http://${window.location.hostname}:8000`;
-        }
-      }
-
-      console.log('Attempting to connect to:', socketUrl);
-
-      const newSocket = io(socketUrl, {
-        transports: ["websocket", "polling"],
-        secure: false, // Disable secure connection for WebContainer
-        timeout: 20000,
-        forceNew: true,
-        reconnection: true,
-        reconnectionAttempts: 5,
-        reconnectionDelay: 1000,
-        withCredentials: false, // Disable credentials for WebContainer
-      });
-
-      console.log("Attempting socket connection to:", socketUrl);
-
-      newSocket.on("connect", () => {
-        console.log("Socket connected:", newSocket.id);
-        setIsUsingMockMode(false);
-      });
-
-      newSocket.on("disconnect", () => {
-        console.log("Socket disconnected");
-      });
-
-      newSocket.on("connect_error", (error) => {
-        console.log("Socket connection failed, falling back to mock mode");
-        console.error("Socket connection error:", error);
-        
-        // Try alternative port based on environment
-        if (window.location.hostname.includes('webcontainer-api.io')) {
-          console.log("Trying alternative WebContainer port 81...");
-          const altProtocol = 'http';
-          const altHost = window.location.hostname.replace('5173', '81');
-          const altUrl = `${altProtocol}://${altHost}`;
-          const altSocket = io(altUrl, {
-            transports: ["websocket", "polling"],
-            secure: false,
-            timeout: 20000,
-            forceNew: true,
-            reconnection: true,
-            reconnectionAttempts: 3,
-            reconnectionDelay: 1000,
-            withCredentials: false,
-          });
-          
-          altSocket.on("connect", () => {
-            console.log("Connected to alternative WebContainer port:", altSocket.id);
-            setSocket(altSocket);
-            setIsUsingMockMode(false);
-          });
-          
-          altSocket.on("connect_error", () => {
-            console.log("Alternative WebContainer port also failed, falling back to mock matching mode");
-            setIsUsingMockMode(true);
-            mockMatching.startBotSimulation();
-            altSocket.close();
-          });
-        } else if (window.location.hostname === "localhost" && socketUrl.includes(":8000")) {
-          console.log("Trying alternative port 8001...");
-          const altSocket = io("http://localhost:8001", {
-            transports: ["websocket", "polling"],
-            secure: false,
-            timeout: 20000,
-            forceNew: true,
-            reconnection: true,
-            reconnectionAttempts: 3,
-            reconnectionDelay: 1000,
-          });
-          
-          altSocket.on("connect", () => {
-            console.log("Connected to alternative port:", altSocket.id);
-            setSocket(altSocket);
-            setIsUsingMockMode(false);
-          });
-          
-          altSocket.on("connect_error", () => {
-            console.log("Alternative port also failed, falling back to mock matching mode");
-            setIsUsingMockMode(true);
-            mockMatching.startBotSimulation();
-            altSocket.close();
-          });
-        } else {
-          console.log("Falling back to mock matching mode");
-          setIsUsingMockMode(true);
-          mockMatching.startBotSimulation();
-        }
-      });
-
-      newSocket.on("reconnect", (attemptNumber) => {
-        console.log("Socket reconnected after", attemptNumber, "attempts");
-      });
-
-      newSocket.on("reconnect_error", (error) => {
-        console.error("Socket reconnection error:", error);
-      });
-
-      setSocket(newSocket);
-
-      return () => {
-        console.log("Cleaning up socket connection");
-        newSocket.close();
-      };
-    }
-  }, [socket]);
-
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (socket) {
-        console.log("Component unmounting, closing socket");
-        socket.close();
-        setSocket(null);
-      }
-    };
-  }, [socket]);
+  const value: ISocketContext = {
+    socket,
+    setSocket,
+    mockMatching,
+    isUsingMockMode,
+  };
 
   return (
-    <SocketContext.Provider
-      value={{ socket, setSocket, mockMatching, isUsingMockMode }}
-    >
+    <SocketContext.Provider value={value}>
       {children}
     </SocketContext.Provider>
   );

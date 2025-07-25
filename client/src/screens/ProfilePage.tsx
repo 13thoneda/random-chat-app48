@@ -220,8 +220,8 @@ export default function ProfilePage() {
 
       {/* Header */}
       <div className={`${
-        <div className="absolute inset-0 bg-gradient-to-r from-white/15 via-pink-100/25 to-white/15 backdrop-blur-sm"></div>
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-red-200/15 to-transparent"></div>
+        isUltraPremium()
+          ? 'bg-gradient-to-r from-purple-400 via-pink-400 to-purple-500'
           : 'bg-gradient-to-r from-peach-400 via-coral-400 to-blush-500'
       } px-4 py-3 flex items-center justify-between border-b ${
         isUltraPremium() ? 'border-purple-300' : 'border-peach-200'

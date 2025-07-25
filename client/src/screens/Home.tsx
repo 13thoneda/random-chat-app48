@@ -4,8 +4,6 @@ import { playSound } from "../lib/audio";
 import { useSocket } from "../context/SocketProvider";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { useInAppNotification } from "../components/InAppNotification";
-import { useDailyBonusNotification } from "../hooks/useDailyBonusNotification";
 import {
   Crown,
   Coins,
@@ -24,27 +22,18 @@ import {
   Settings,
   Bot,
 } from "lucide-react";
-import GenderFilter from "../components/GenderFilter";
-// import PremiumPaywall from "../components/PremiumPaywall"; // Now using separate page
-import TreasureChest from "../components/TreasureChest";
+// Problematic components temporarily removed
 import BottomNavBar from "../components/BottomNavBar";
 import { usePremium } from "../context/PremiumProvider";
 import { useCoin } from "../context/CoinProvider";
 import { useLanguage } from "../context/LanguageProvider";
-import BannerAd from "../components/BannerAd";
-import RewardedAdButton from "../components/RewardedAdButton";
-import PremiumBadge from "../components/PremiumBadge";
-import { OnlineNotificationManager } from "../components/OnlineNotification";
-import UltraHomeEnhancements from "../components/UltraHomeEnhancements";
-import UltraBottomNavBar from "../components/UltraBottomNavBar";
-import { UltraPageTransition } from "../components/UltraBottomNavBar";
-import { useHaptics } from "../lib/haptics";
+// Additional problematic components removed
 
 // Ad unit IDs for scrollable banner ads
 const adUnitIds = [
-  import.meta.env.VITE_ADMOB_BANNER_ID || 'ca-app-pub-1776596266948987/2770517385', // Original banner ad
-  'ca-app-pub-1776596266948987/7315217300', // New ad unit 1
-  'ca-app-pub-1776596266948987/2468099206', // New ad unit 2
+  import.meta.env.VITE_ADMOB_BANNER_ID || 'ca-app-pub-1776596266948987/2770517385',
+  'ca-app-pub-1776596266948987/7315217300',
+  'ca-app-pub-1776596266948987/2468099206',
 ];
 
 const testimonials = [
@@ -54,7 +43,7 @@ const testimonials = [
     rating: 5,
   },
   {
-    name: "Arjun",
+    name: "Arjun", 
     text: "Every chat is a new adventure, truly amazing!",
     rating: 5,
   },
@@ -74,475 +63,268 @@ const stats = [
 export default function Home() {
   const { socket, isUsingMockMode } = useSocket();
   const navigate = useNavigate();
-  const { isPremium, setPremium, isUltraPremium, isProMonthly, premiumPlan } = usePremium();
-  const {
-    coins,
-    claimDailyBonus,
-    canClaimDailyBonus,
-    isLoading: coinsLoading,
-    currentUser,
-    hasCompletedOnboarding,
-  } = useCoin();
+  const { isPremium, isUltraPremium, isProMonthly, premiumPlan } = usePremium();
+  const { coins, claimDailyBonus, canClaimDailyBonus, currentUser, hasCompletedOnboarding } = useCoin();
   const { t } = useLanguage();
   const [currentAdIndex, setCurrentAdIndex] = useState(0);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  // const [showPaywall, setShowPaywall] = useState(false); // Now using separate page
   const [showTreasureChest, setShowTreasureChest] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
   const [onlineUsers, setOnlineUsers] = useState(12847);
-  const { showBonusNotification, NotificationComponent } =
-    useInAppNotification();
-  const { buttonTap, premiumAction, matchFound } = useHaptics();
 
-  // Handle daily bonus notification
-  useDailyBonusNotification({
-    canClaimDailyBonus,
-    currentUser,
-    hasCompletedOnboarding,
-    showBonusNotification,
-    claimDailyBonus,
-  });
-
-  // Redirect to onboarding if user hasn't completed it
-  useEffect(() => {
-    if (currentUser && !coinsLoading && !hasCompletedOnboarding) {
-      navigate('/onboarding');
-    }
-  }, [currentUser, hasCompletedOnboarding, coinsLoading, navigate]);
-
-  // Simulate online users count
+  // Cycle through banner ads
   useEffect(() => {
     const interval = setInterval(() => {
-      setOnlineUsers((prev) => prev + Math.floor(Math.random() * 10) - 5);
+      setCurrentAdIndex((prev) => (prev + 1) % adUnitIds.length);
     }, 5000);
     return () => clearInterval(interval);
   }, []);
 
-
-
+  // Cycle through testimonials
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentAdIndex((prev) => (prev + 1) % adUnitIds.length);
+      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
     }, 4000);
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+  const handleStartChat = useCallback(async (type: 'video' | 'voice' | 'text') => {
+    if (isConnecting) return;
+    
+    setIsConnecting(true);
+    try {
+      await playSound('swipe');
+      navigate(`/${type === 'text' ? 'chat' : type === 'voice' ? 'voice' : 'video-chat'}`);
+    } catch (error) {
+      console.error(`Error starting ${type} chat:`, error);
+    } finally {
+      setTimeout(() => setIsConnecting(false), 1000);
+    }
+  }, [isConnecting, navigate]);
 
-  const handleStartCall = useCallback(
-    async (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
-      if (isConnecting) return;
-
-      // Haptic feedback for main action
-      matchFound();
-      setIsConnecting(true);
-      playSound("join");
-
-      // Navigate immediately to video chat page (it will handle the waiting state)
-      navigate("/video-chat", {
-        state: {
-          isSearching: true,
-        },
-      });
-
-      setIsConnecting(false);
-    },
-    [navigate, isConnecting, matchFound],
-  );
-
-  const handleVoiceChat = useCallback(() => {
-    buttonTap();
-    navigate("/voice");
-  }, [navigate, buttonTap]);
-
-  const handleUpgrade = () => {
-    premiumAction();
-    navigate("/premium");
+  const handleClaimBonus = async () => {
+    if (canClaimDailyBonus()) {
+      const success = await claimDailyBonus();
+      if (success) {
+        await playSound('match');
+        setShowTreasureChest(true);
+      }
+    }
   };
 
-  // const handlePremiumPurchase = (plan: string) => {
-  //   const now = new Date();
-  //   const expiry = new Date(now);
-  //   if (plan === "weekly") {
-  //     expiry.setDate(now.getDate() + 7);
-  //   } else {
-  //     expiry.setMonth(now.getMonth() + 1);
-  //   }
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-peach-25 via-cream-50 to-blush-50 pb-20">
+      <Helmet>
+        <title>AjnabiCam - Connect with Amazing People</title>
+        <meta name="description" content="Find your perfect match with AjnabiCam's romantic video chat platform" />
+      </Helmet>
 
-  //   setPremium(true, expiry);
-  //   setShowPaywall(false);
-
-  //   showBonusNotification(
-  //     "🎉 Welcome to Premium!",
-  //     `Your ${plan} subscription is now active! Enjoy unlimited features.`,
-  //     () => {},
-  //   );
-  // }; // Now handled in PremiumPage
-
-  // Show loading while checking authentication and onboarding status
-  if (coinsLoading && currentUser) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-peach-25 via-cream-50 to-blush-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-peach-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading your profile...</p>
+      {/* Header */}
+      <div className="sticky top-0 z-10 bg-white/90 backdrop-blur-sm border-b border-peach-100">
+        <div className="flex items-center justify-between p-4">
+          <div className="flex items-center gap-3">
+            <div className="text-2xl">💕</div>
+            <h1 className="text-xl font-bold bg-gradient-to-r from-peach-600 to-coral-600 bg-clip-text text-transparent">
+              AjnabiCam
+            </h1>
+            {isPremium && <span className="text-xs bg-gold-100 text-gold-800 px-2 py-1 rounded-full">PREMIUM</span>}
+          </div>
+          
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1 bg-amber-100 px-3 py-1 rounded-full">
+              <Coins className="w-4 h-4 text-amber-600" />
+              <span className="text-sm font-semibold text-amber-800">{coins}</span>
+            </div>
+            <button onClick={() => navigate('/profile')} className="p-2 rounded-full bg-peach-100 hover:bg-peach-200 transition-colors">
+              <User className="w-5 h-5 text-peach-600" />
+            </button>
+          </div>
         </div>
       </div>
-    );
-  }
 
-  return (
-    <>
-      <Helmet>
-        <title>
-          {t("app.name")} - Random Video Chat - Live chat with ajnabis
-        </title>
-      </Helmet>
-      <UltraPageTransition>
-        <main className={`flex flex-col min-h-screen w-full relative ${
-          isUltraPremium()
-            ? 'bg-gradient-to-br from-dating-background-light via-pink-50 to-rose-50'
-            : 'bg-gradient-to-br from-dating-background-light via-pink-50 to-rose-50'
-        }`}>
-        {/* Mobile App Content Container */}
-        <div className="flex-1 px-4 py-6 space-y-6">
-
-          {/* User Status Card */}
-          <div className={`rounded-2xl p-4 shadow-sm border ${
-            isUltraPremium()
-              ? 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30 shadow-lg'
-              : 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30 shadow-lg'
-          }`}>
+      <div className="px-4 py-6 space-y-6">
+        {/* Daily Bonus */}
+        {canClaimDailyBonus() && (
+          <div className="bg-gradient-to-r from-amber-400 to-orange-500 rounded-2xl p-4 text-white animate-pulse">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                  isUltraPremium()
-                    ? 'bg-gradient-to-r from-dating-pink-500 to-dating-rose-500'
-                    : 'bg-gradient-to-r from-dating-pink-500 to-dating-rose-500'
-                }`}>
-                  <User className="h-6 w-6 text-white" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className={`font-semibold ${
-                      isUltraPremium() ? 'text-gray-900' : 'text-gray-900'
-                    }`}>Welcome back!</span>
-                    {isPremium && (
-                      <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full ${
-                        isUltraPremium()
-                          ? 'bg-gradient-to-r from-dating-pink-500 to-dating-rose-500'
-                          : 'bg-gradient-to-r from-dating-pink-500 to-dating-rose-500'
-                      }`}>
-                        <Crown className="h-3 w-3 text-white" />
-                        <span className="text-white text-xs font-bold">ULTRA+</span>
-                      </div>
-                    )}
-                  </div>
-                  <div className={`flex items-center gap-4 text-sm ${
-                    isUltraPremium() ? 'text-gray-600' : 'text-gray-600'
-                  }`}>
-                    <div className="flex items-center gap-1">
-                      <Coins className={`h-4 w-4 ${
-                        isUltraPremium() ? 'text-yellow-500' : 'text-yellow-500'
-                      }`} />
-                      <span className="font-medium">{coinsLoading ? "..." : coins}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <div className="w-2 h-2 bg-dating-pink-500 rounded-full"></div>
-                      <span>Online</span>
-                    </div>
-                  </div>
-                </div>
+              <div>
+                <h3 className="font-bold">Daily Bonus Available!</h3>
+                <p className="text-sm opacity-90">Claim your free coins</p>
               </div>
               <button
-                onClick={() => {
-                  buttonTap();
-                  navigate("/profile");
-                }}
-                className={`p-2 rounded-lg transition-colors ${
-                  isUltraPremium()
-                    ? 'bg-dating-pink-100/50 hover:bg-dating-pink-200 text-dating-pink-700'
-                    : 'bg-dating-pink-100/50 hover:bg-dating-pink-200 text-dating-pink-700'
-                }`}
+                onClick={handleClaimBonus}
+                className="bg-white text-orange-600 px-4 py-2 rounded-xl font-semibold hover:scale-105 transition-transform"
               >
-                <Settings className="h-5 w-5" />
+                Claim +50 <Coins className="w-4 h-4 inline ml-1" />
               </button>
             </div>
           </div>
+        )}
 
-          {/* Main Action Card */}
-          <div className={`rounded-2xl p-6 text-white shadow-lg ${
-            isUltraPremium()
-              ? 'bg-gradient-to-br from-dating-pink-500 via-dating-pink-600 to-dating-rose-600'
-              : 'bg-gradient-to-br from-dating-pink-500 via-dating-pink-600 to-dating-rose-600'
-          }`}>
-            <div className="text-center space-y-4">
-              <div className="flex justify-center">
-                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                  <Heart className="h-8 w-8 text-white" />
-                </div>
-              </div>
-              <div>
-                <h2 className="text-xl font-bold mb-2">Start Video Chat</h2>
-                <p className="text-white/90 text-sm">Connect with amazing people worldwide</p>
-              </div>
-              <Button
-                className={`w-full py-4 rounded-xl font-semibold text-lg shadow-lg touch-action-manipulation transition-all duration-200 active:scale-95 ${
-                  isUltraPremium()
-                    ? 'bg-white text-dating-pink-600 hover:bg-dating-pink-50'
-                    : 'bg-white text-dating-pink-600 hover:bg-dating-pink-50'
-                }`}
-                onClick={handleStartCall}
-                disabled={isConnecting}
-              >
-                {isConnecting ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <div className={`w-5 h-5 border-2 border-t-transparent rounded-full animate-spin ${
-                      isUltraPremium() ? 'border-primary-600' : 'border-primary-600'
-                    } border-dating-pink-600`}></div>
-                    <span>Finding match...</span>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center gap-2">
-                    <Video className="h-5 w-5" />
-                    <span>Start Chat</span>
-                    <Sparkles className="h-4 w-4" />
-                  </div>
-                )}
-              </Button>
-            </div>
-          </div>
-
-          {/* Preferences Card */}
-          <div className={`rounded-2xl p-4 shadow-sm border ${
-            isUltraPremium()
-              ? 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30'
-              : 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30'
-          }`}>
-            <h3 className={`font-semibold mb-3 ${
-              isUltraPremium() ? 'text-gray-900' : 'text-gray-900'
-            }`}>Chat Preferences</h3>
-            <GenderFilter
-              isPremium={isPremium}
-              onGenderSelect={(gender: string) => {
-                console.log("Selected gender:", gender);
-              }}
-              onUpgrade={handleUpgrade}
-            />
-          </div>
-
-          {/* Quick Actions Grid */}
-          <div className="grid grid-cols-2 gap-3">
-            <div
-              onClick={() => {
-                buttonTap();
-                navigate("/friends");
-              }}
-              className={`rounded-xl p-4 shadow-sm border hover:shadow-md transition-all active:scale-95 cursor-pointer ${
-                isUltraPremium()
-                  ? 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30'
-                  : 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30'
-              }`}
-            >
-              <div className="text-center space-y-2">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mx-auto ${
-                  isUltraPremium()
-                    ? 'bg-dating-pink-100 text-dating-pink-600'
-                    : 'bg-dating-pink-100 text-dating-pink-600'
-                }`}>
-                  <Users className="h-6 w-6" />
-                </div>
-                <div>
-                  <h4 className={`font-semibold ${
-                    isUltraPremium() ? 'text-gray-900' : 'text-gray-900'
-                  }`}>Friends</h4>
-                  <p className={`text-xs ${
-                    isUltraPremium() ? 'text-gray-600' : 'text-gray-600'
-                  }`}>Connect with buddies</p>
-                </div>
-              </div>
-            </div>
-
-            <div
-              onClick={() => {
-                buttonTap();
-                navigate("/ai-chatbot");
-              }}
-              className={`rounded-xl p-4 shadow-sm border hover:shadow-md transition-all active:scale-95 cursor-pointer ${
-                isUltraPremium()
-                  ? 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30'
-                  : 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30'
-              }`}
-            >
-              <div className="text-center space-y-2">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mx-auto ${
-                  isUltraPremium()
-                    ? 'bg-dating-rose-100 text-dating-rose-600'
-                    : 'bg-dating-rose-100 text-dating-rose-600'
-                }`}>
-                  <Bot className="h-6 w-6" />
-                </div>
-                <div>
-                  <h4 className={`font-semibold ${
-                    isUltraPremium() ? 'text-gray-900' : 'text-gray-900'
-                  }`}>AI Chat</h4>
-                  <p className={`text-xs ${
-                    isUltraPremium() ? 'text-gray-600' : 'text-gray-600'
-                  }`}>Smart conversations</p>
-                </div>
-              </div>
-            </div>
-
-            <div
-              onClick={handleVoiceChat}
-              className={`rounded-xl p-4 shadow-sm border hover:shadow-md transition-all active:scale-95 cursor-pointer ${
-                isUltraPremium()
-                  ? 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30'
-                  : 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30'
-              }`}
-            >
-              <div className="text-center space-y-2">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mx-auto ${
-                  isUltraPremium()
-                    ? 'bg-orange-100 text-orange-600'
-                    : 'bg-orange-100 text-orange-600'
-                }`}>
-                  <Mic className="h-6 w-6" />
-                </div>
-                <div>
-                  <h4 className={`font-semibold ${
-                    isUltraPremium() ? 'text-gray-900' : 'text-gray-900'
-                  }`}>Voice</h4>
-                  <p className={`text-xs ${
-                    isUltraPremium() ? 'text-gray-600' : 'text-gray-600'
-                  }`}>Audio only chats</p>
-                </div>
-              </div>
-            </div>
-
-            <div
-              onClick={() => {
-                buttonTap();
-                setShowTreasureChest(true);
-              }}
-              className={`rounded-xl p-4 shadow-sm border hover:shadow-md transition-all active:scale-95 cursor-pointer ${
-                isUltraPremium()
-                  ? 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30'
-                  : 'bg-dating-background-card backdrop-blur-sm border-dating-pink-200/30'
-              }`}
-            >
-              <div className="text-center space-y-2">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mx-auto ${
-                  isUltraPremium()
-                    ? 'bg-yellow-100 text-yellow-600'
-                    : 'bg-yellow-100 text-yellow-600'
-                }`}>
-                  <Coins className="h-6 w-6" />
-                </div>
-                <div>
-                  <h4 className={`font-semibold ${
-                    isUltraPremium() ? 'text-gray-900' : 'text-gray-900'
-                  }`}>Coins</h4>
-                  <p className={`text-xs ${
-                    isUltraPremium() ? 'text-gray-600' : 'text-gray-600'
-                  }`}>Earn rewards</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Premium Features */}
-          {!isPremium && (
-            <div className={`rounded-2xl p-4 text-white ${
-              isUltraPremium()
-                ? 'bg-gradient-to-r from-dating-pink-500 to-dating-rose-500'
-                : 'bg-gradient-to-r from-dating-pink-500 to-dating-rose-500'
-            }`}>
-              <div className="flex items-center justify-between">
-                <div className="flex-1">
-                  <h3 className="font-bold mb-1">💰 Earn Free Coins!</h3>
-                  <p className="text-sm text-white/90">Watch ads to earn coins</p>
-                </div>
-                <RewardedAdButton
-                  variant="compact"
-                  onRewardEarned={(amount) => {
-                    console.log(`User earned ${amount} coins from ad`);
-                  }}
-                />
-              </div>
-            </div>
-          )}
-
+        {/* Banner Ad Placeholder */}
+        <div className="bg-gradient-to-r from-pink-100 to-purple-100 rounded-2xl p-4 text-center">
+          <p className="text-gray-600 text-sm">Advertisement Space</p>
         </div>
 
-        {/* Debug: Test ULTRA+ Features */}
-        {!isUltraPremium() && (
-          <div className="px-4 pb-6">
-            <Button
-              onClick={() => {
-                premiumAction();
-                const expiry = new Date();
-                expiry.setMonth(expiry.getMonth() + 3);
-                setPremium(true, expiry, 'ultra-quarterly');
-                alert('🎉 ULTRA+ activated! Experience the luxury!');
-                window.location.reload();
-              }}
-              className="w-full bg-gradient-to-r from-dating-pink-600 to-dating-rose-600 hover:from-dating-pink-700 hover:to-dating-rose-700 active:scale-95 text-white py-4 px-5 rounded-2xl shadow-lg transition-all duration-200 text-center touch-action-manipulation"
+        {/* Online Users Counter */}
+        <div className="bg-white rounded-2xl p-4 shadow-sm border border-peach-100">
+          <div className="flex items-center justify-center gap-2">
+            <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+            <span className="text-gray-600">
+              <span className="font-bold text-green-600">{onlineUsers.toLocaleString()}</span> people online now
+            </span>
+          </div>
+        </div>
+
+        {/* Main Chat Buttons */}
+        <div className="grid grid-cols-1 gap-4">
+          {/* Video Chat */}
+          <button
+            onClick={() => handleStartChat('video')}
+            disabled={isConnecting}
+            className="bg-gradient-to-r from-peach-500 to-coral-500 hover:from-peach-600 hover:to-coral-600 text-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                  <Video className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <h3 className="font-bold text-lg">Video Chat</h3>
+                  <p className="text-white/80 text-sm">Face-to-face conversations</p>
+                </div>
+              </div>
+              <Play className="w-6 h-6" />
+            </div>
+          </button>
+
+          {/* Voice Chat */}
+          <button
+            onClick={() => handleStartChat('voice')}
+            disabled={isConnecting}
+            className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                  <Mic className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <h3 className="font-bold text-lg">Voice Chat</h3>
+                  <p className="text-white/80 text-sm">Voice-only conversations</p>
+                </div>
+              </div>
+              <Play className="w-6 h-6" />
+            </div>
+          </button>
+
+          {/* Text Chat */}
+          <button
+            onClick={() => handleStartChat('text')}
+            disabled={isConnecting}
+            className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                  <Users className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <h3 className="font-bold text-lg">Text Chat</h3>
+                  <p className="text-white/80 text-sm">Message and emoji fun</p>
+                </div>
+              </div>
+              <Play className="w-6 h-6" />
+            </div>
+          </button>
+        </div>
+
+        {/* Gender Filter Placeholder */}
+        <div className="bg-white rounded-2xl p-4 shadow-sm">
+          <h3 className="font-semibold text-gray-800 mb-3">Connect with</h3>
+          <div className="flex gap-2">
+            <button className="flex-1 bg-blue-100 text-blue-800 py-2 px-4 rounded-xl text-sm font-medium">
+              Everyone
+            </button>
+            <button className="flex-1 bg-gray-100 text-gray-600 py-2 px-4 rounded-xl text-sm">
+              Customize
+            </button>
+          </div>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="grid grid-cols-2 gap-4">
+          <button
+            onClick={() => navigate('/friends')}
+            className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
+          >
+            <Heart className="w-6 h-6 text-pink-500 mb-2" />
+            <div className="text-sm font-medium text-gray-800">Friends</div>
+          </button>
+          
+          <button
+            onClick={() => navigate('/ai-chatbot')}
+            className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
+          >
+            <Bot className="w-6 h-6 text-blue-500 mb-2" />
+            <div className="text-sm font-medium text-gray-800">AI Chat</div>
+          </button>
+        </div>
+
+        {/* Rewarded Ad Placeholder */}
+        <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl p-4 text-white text-center">
+          <h3 className="font-bold mb-2">🎁 Watch & Earn</h3>
+          <p className="text-sm opacity-90 mb-3">Watch a short video to earn coins</p>
+          <button className="bg-white text-emerald-600 px-6 py-2 rounded-xl font-semibold">
+            Earn +25 Coins
+          </button>
+        </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-3 gap-4">
+          {stats.map((stat, index) => (
+            <div key={index} className="bg-white rounded-xl p-4 text-center shadow-sm">
+              <stat.icon className="w-6 h-6 text-peach-500 mx-auto mb-2" />
+              <div className="font-bold text-lg text-gray-800">{stat.number}</div>
+              <div className="text-xs text-gray-600">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Testimonials */}
+        <div className="bg-white rounded-2xl p-6 shadow-sm">
+          <h3 className="font-bold text-lg text-center mb-4 text-gray-800">What People Say</h3>
+          <div className="text-center">
+            <p className="text-gray-600 italic mb-3">"{testimonials[currentTestimonial].text}"</p>
+            <div className="flex justify-center mb-2">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+              ))}
+            </div>
+            <p className="font-semibold text-peach-600">- {testimonials[currentTestimonial].name}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Navigation */}
+      <BottomNavBar />
+
+      {/* Treasure Chest Modal Placeholder */}
+      {showTreasureChest && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-3xl p-8 text-center m-4">
+            <div className="text-6xl mb-4">🎁</div>
+            <h3 className="text-xl font-bold mb-2">Bonus Claimed!</h3>
+            <p className="text-gray-600 mb-4">You earned 50 coins!</p>
+            <button
+              onClick={() => setShowTreasureChest(false)}
+              className="bg-peach-500 text-white px-6 py-2 rounded-xl"
             >
-              <Crown className="h-5 w-5 mr-2" />
-              🧪 Try ULTRA+ Experience (Test Mode)
-            </Button>
+              Awesome!
+            </button>
           </div>
-        )}
-
-        {/* ULTRA+ Home Enhancements */}
-        {isUltraPremium() && (
-          <div className="px-4 pb-6">
-            <UltraHomeEnhancements
-              isUltraPremium={true}
-              onQuickMatch={() => {
-                setIsConnecting(true);
-                navigate("/video-chat", {
-                  state: { genderFilter: "all", voiceOnly: false, isSearching: true }
-                });
-              }}
-              onPremiumSearch={() => {
-                // Premium search with VIP matching
-                setIsConnecting(true);
-                navigate("/video-chat", {
-                  state: { genderFilter: "premium", voiceOnly: false, isSearching: true }
-                });
-              }}
-              onAnalytics={() => {
-                // Open premium analytics dashboard
-                console.log("Opening ULTRA+ Analytics Dashboard");
-              }}
-            />
-          </div>
-        )}
-
-        {/* Use UltraBottomNavBar for ULTRA+ users, regular for others */}
-        {isUltraPremium() ? <UltraBottomNavBar /> : <BottomNavBar />}
-        </main>
-      </UltraPageTransition>
-
-      {/* PremiumPaywall now moved to separate /premium page */}
-
-      {/* Online Notifications for Premium Users */}
-      {(isUltraPremium() || isProMonthly()) && <OnlineNotificationManager />}
-
-      <TreasureChest
-        isOpen={showTreasureChest}
-        onClose={() => setShowTreasureChest(false)}
-      />
-
-      <NotificationComponent />
-    </>
+        </div>
+      )}
+    </div>
   );
 }

@@ -1,9 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAuth } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { firebaseApp, db, storage } from '../firebaseConfig';
+// Firebase imports removed for simplified version
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
@@ -32,7 +29,7 @@ export default function OnboardingScreen() {
   const [uploadProgress, setUploadProgress] = useState(0);
   const { language, setLanguage, t } = useLanguage();
   const navigate = useNavigate();
-  const auth = getAuth(firebaseApp);
+  // Auth removed for simplified version
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>, photoId: number) => {
     const file = event.target.files?.[0];
@@ -114,55 +111,37 @@ export default function OnboardingScreen() {
       alert('Please enter a username');
       return;
     }
-    
+
     if (!gender) {
       alert('Please select your gender');
       return;
     }
 
-    const hasProfilePhoto = photos.some(photo => photo.isProfile && photo.file);
-    if (!hasProfilePhoto) {
-      alert('Please upload at least one photo and set it as your profile picture');
-      return;
-    }
-    
     if (!isLoading) {
       setIsLoading(true);
       setUploadProgress(0);
-      
+
       try {
-        const user = auth.currentUser;
-        if (!user) {
-          throw new Error('No authenticated user found');
-        }
+        // Simplified version - save to localStorage
+        setUploadProgress(50);
 
-        // Upload all images
-        setUploadProgress(30);
-        const uploadResults = await uploadMultipleImages(photos, user.uid);
-        
-        if (!uploadResults.profileImage) {
-          throw new Error('Failed to upload profile image');
-        }
-        
-        setUploadProgress(70);
-
-        // Save user data to Firestore and mark onboarding as complete
-        const userDocRef = doc(db, "users", user.uid);
-        await setDoc(userDocRef, {
+        const userData = {
           username: username.trim(),
           gender,
           bio: bio.trim(),
-          profileImageUrl: uploadResults.profileImage,
-          additionalImages: uploadResults.additionalImages,
           language,
           onboardingComplete: true,
-          coins: 100, // Initialize with coins
-          createdAt: new Date(),
-          updatedAt: new Date()
-        }, { merge: true });
+          coins: 100,
+          createdAt: new Date().toISOString()
+        };
+
+        localStorage.setItem('ajnabicam_user', JSON.stringify(userData));
 
         setUploadProgress(100);
-        console.log('User onboarding data saved to Firestore');
+        console.log('User onboarding completed, data saved to localStorage');
+
+        // Navigate to home
+        navigate('/home');
         
         // Small delay to show completion
         setTimeout(() => {
@@ -180,32 +159,26 @@ export default function OnboardingScreen() {
 
   const handleSkip = async () => {
     if (isLoading) return;
-    
-    setIsLoading(true);
-    
-    try {
-      const user = auth.currentUser;
-      if (!user) {
-        throw new Error('No authenticated user found');
-      }
 
-      // Save minimal data to Firestore and mark onboarding as complete
-      const userDocRef = doc(db, "users", user.uid);
-      await setDoc(userDocRef, {
+    setIsLoading(true);
+
+    try {
+      // Simplified skip - just save to localStorage for now
+      const userData = {
         username: 'User',
         gender: 'other',
         bio: '',
-        profileImageUrl: '', // No image for skipped onboarding
-        additionalImages: [],
         language,
         onboardingComplete: true,
-        coins: 100, // Initialize with coins
-        createdAt: new Date(),
-        updatedAt: new Date()
-      }, { merge: true });
+        coins: 100,
+        createdAt: new Date().toISOString()
+      };
 
-      console.log('User skipped onboarding, minimal data saved to Firestore');
-      navigate('/');
+      localStorage.setItem('ajnabicam_user', JSON.stringify(userData));
+      console.log('User skipped onboarding, data saved to localStorage');
+
+      // Navigate to home
+      navigate('/home');
     } catch (error) {
       console.error('Error saving skip data:', error);
       alert('Error completing setup. Please try again.');
