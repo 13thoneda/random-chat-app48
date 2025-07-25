@@ -327,13 +327,21 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Treasure Chest Modal */}
+      {/* Treasure Chest Modal Placeholder */}
       {showTreasureChest && (
-        <TreasureChest 
-          isOpen={showTreasureChest}
-          onClose={() => setShowTreasureChest(false)}
-          coins={50}
-        />
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-3xl p-8 text-center m-4">
+            <div className="text-6xl mb-4">🎁</div>
+            <h3 className="text-xl font-bold mb-2">Bonus Claimed!</h3>
+            <p className="text-gray-600 mb-4">You earned 50 coins!</p>
+            <button
+              onClick={() => setShowTreasureChest(false)}
+              className="bg-peach-500 text-white px-6 py-2 rounded-xl"
+            >
+              Awesome!
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
