@@ -48,75 +48,6 @@ function LoadingScreen() {
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
-  const [authInitialized, setAuthInitialized] = useState(false);
-  const navigate = useNavigate();
-
-  // Error boundary for the app
-  const [hasError, setHasError] = useState(false);
-
-  if (hasError) {
-    return <div className="min-h-screen flex items-center justify-center"><p>Something went wrong. Please refresh the page.</p></div>;
-  }
-
-  // Analytics removed temporarily to fix React context issues
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSplash(false);
-    }, 2000);
-
-    // Initialize ad services
-    const initializeAdServices = async () => {
-      try {
-        console.log('🎯 Initializing ad mediation services...');
-
-        // Initialize Unity Ads first (higher priority)
-        const unitySuccess = await unityAdsService.initialize();
-        console.log(`🎮 Unity Ads: ${unitySuccess ? 'Ready' : 'Failed'}`);
-
-        // Initialize AdMob mediation
-        const mediationSuccess = await adMobService.initialize();
-        console.log(`📱 AdMob Mediation: ${mediationSuccess ? 'Ready' : 'Failed'}`);
-
-        if (unitySuccess) {
-          console.log('✅ Unity Ads mediation is active - higher eCPM expected!');
-        }
-      } catch (error) {
-        console.warn('⚠️ Ad service initialization failed (non-critical):', error);
-      }
-    };
-
-    initializeAdServices();
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    // Initialize error monitoring
-    initializeErrorMonitoring();
-
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        // ✅ Make sure Firestore doc exists for logged-in user
-        await ensureUserDocumentExists(user.uid);
-        // Initialize error monitoring with user ID
-        initializeErrorMonitoring(user.uid);
-      } else {
-        // ✅ Auto sign-in anonymously for new users
-        try {
-          await signInAnonymously(auth);
-          console.log("✅ User signed in anonymously");
-        } catch (error) {
-          console.error("❌ Error signing in anonymously:", error);
-        }
-      }
-      setAuthInitialized(true);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-
 
   const handleSplashComplete = () => {
     setShowSplash(false);
@@ -125,18 +56,6 @@ function App() {
   // Show splash screen
   if (showSplash) {
     return <SplashScreen onComplete={handleSplashComplete} />;
-  }
-
-  // Show loading while authentication is initializing
-  if (!authInitialized) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-peach-25 via-cream-50 to-blush-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-peach-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Initializing...</p>
-        </div>
-      </div>
-    );
   }
 
   return (
