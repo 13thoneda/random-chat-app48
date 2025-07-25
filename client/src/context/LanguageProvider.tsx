@@ -36,6 +36,12 @@ const translations: Record<Language, Record<string, string>> = {
   }
 };
 
+// Export languages list for components that need it
+export const languages = [
+  { code: 'en' as Language, name: 'English' },
+  { code: 'hi' as Language, name: 'हिंदी (Hindi)' },
+];
+
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('en');
 
