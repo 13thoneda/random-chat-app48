@@ -305,8 +305,27 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Bottom Navigation */}
-      <BottomNavBar />
+      {/* Bottom Navigation Placeholder */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2 safe-area-bottom">
+        <div className="flex justify-around items-center max-w-lg mx-auto">
+          <button className="flex flex-col items-center p-2 text-peach-600">
+            <Heart className="w-5 h-5" />
+            <span className="text-xs mt-1">Home</span>
+          </button>
+          <button className="flex flex-col items-center p-2 text-gray-400">
+            <Users className="w-5 h-5" />
+            <span className="text-xs mt-1">Chat</span>
+          </button>
+          <button className="flex flex-col items-center p-2 text-gray-400">
+            <User className="w-5 h-5" />
+            <span className="text-xs mt-1">Profile</span>
+          </button>
+          <button className="flex flex-col items-center p-2 text-gray-400">
+            <Settings className="w-5 h-5" />
+            <span className="text-xs mt-1">Settings</span>
+          </button>
+        </div>
+      </div>
 
       {/* Treasure Chest Modal */}
       {showTreasureChest && (
