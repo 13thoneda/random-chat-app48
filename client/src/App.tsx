@@ -66,12 +66,7 @@ function App() {
     return <div className="min-h-screen flex items-center justify-center"><p>Something went wrong. Please refresh the page.</p></div>;
   }
 
-  // Initialize analytics with error handling
-  try {
-    useAnalytics();
-  } catch (error) {
-    console.error("Analytics initialization failed:", error);
-  }
+  // Analytics removed temporarily to fix React context issues
 
   useEffect(() => {
     const timer = setTimeout(() => {
