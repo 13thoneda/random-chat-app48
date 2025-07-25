@@ -44,7 +44,7 @@ createRoot(document.getElementById("root")!).render(
                   <ErrorBoundary FallbackComponent={ErrorFallback}>
                     <SocketProvider>
                       <ErrorBoundary FallbackComponent={ErrorFallback}>
-                        <App />
+                        <TestApp />
                       </ErrorBoundary>
                     </SocketProvider>
                   </ErrorBoundary>
