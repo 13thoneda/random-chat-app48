@@ -22,9 +22,7 @@ import {
   Settings,
   Bot,
 } from "lucide-react";
-import GenderFilter from "../components/GenderFilter";
-import TreasureChest from "../components/TreasureChest";
-import BottomNavBar from "../components/BottomNavBar";
+// Problematic components temporarily removed
 import { usePremium } from "../context/PremiumProvider";
 import { useCoin } from "../context/CoinProvider";
 import { useLanguage } from "../context/LanguageProvider";
