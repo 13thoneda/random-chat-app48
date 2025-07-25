@@ -59,44 +59,14 @@ function App() {
   }
 
   return (
-    <AppStartupCheck>
-      <UltraAppWrapper>
-        <Suspense fallback={<LoadingScreen />}>
-        <div className="app-container">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/onboarding" element={<OnboardingScreen />} />
-            <Route path="/user-setup" element={<UserSetup />} />
-            <Route path="/premium-trial" element={<ReferToUnlock />} />
-            <Route path="/home" element={<HomePage />} />
-            <Route path="/gender-select" element={<GenderSelect />} />
-            <Route path="/video-chat" element={<VideoChat />} />
-            <Route path="/voice" element={<VoicePage />} />
-            <Route path="/personal-chat" element={<PersonalChat />} />
-            <Route path="/chat" element={<ChatPage />} />
-            <Route path="/friends" element={<FriendsPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/refer" element={<ReferToUnlock />} />
-            <Route path="/referral-code" element={<ReferralCodeScreen />} />
-            <Route path="/ai-chatbot" element={<AIChatbotPage />} />
-            <Route path="/premium" element={<PremiumPage />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-            <Route path="/terms-of-service" element={<TermsOfServicePage />} />
-            <Route path="/admin" element={<AdminPanelPage />} />
-            <Route path="/spin-wheel" element={<SpinWheel />} />
-            <Route path="/storage-debug" element={<StorageDebugPage />} />
-            <Route path="/firebase-debug" element={<FirebaseDebugPage />} />
-            <Route path="/ad-testing" element={<AdTestingPage />} />
-            <Route path="*" element={<HomePage />} />
-          </Routes>
-
-          <PWAInstallPrompt />
-          <CookieConsent />
-          <LegalFooter />
-        </div>
-        </Suspense>
-      </UltraAppWrapper>
-    </AppStartupCheck>
+    <div className="app-container">
+      <Routes>
+        <Route path="/" element={<OnboardingScreen />} />
+        <Route path="/onboarding" element={<OnboardingScreen />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="*" element={<OnboardingScreen />} />
+      </Routes>
+    </div>
   );
 }
 
