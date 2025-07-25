@@ -114,40 +114,34 @@ export default function OnboardingScreen() {
       alert('Please enter a username');
       return;
     }
-    
+
     if (!gender) {
       alert('Please select your gender');
       return;
     }
 
-    const hasProfilePhoto = photos.some(photo => photo.isProfile && photo.file);
-    if (!hasProfilePhoto) {
-      alert('Please upload at least one photo and set it as your profile picture');
-      return;
-    }
-    
     if (!isLoading) {
       setIsLoading(true);
       setUploadProgress(0);
-      
+
       try {
-        const user = auth.currentUser;
-        if (!user) {
-          throw new Error('No authenticated user found');
-        }
+        // Simplified version - save to localStorage
+        setUploadProgress(50);
 
-        // Upload all images
-        setUploadProgress(30);
-        const uploadResults = await uploadMultipleImages(photos, user.uid);
-        
-        if (!uploadResults.profileImage) {
-          throw new Error('Failed to upload profile image');
-        }
-        
-        setUploadProgress(70);
+        const userData = {
+          username: username.trim(),
+          gender,
+          bio: bio.trim(),
+          language,
+          onboardingComplete: true,
+          coins: 100,
+          createdAt: new Date().toISOString()
+        };
 
-        // Save user data to Firestore and mark onboarding as complete
-        const userDocRef = doc(db, "users", user.uid);
+        localStorage.setItem('ajnabicam_user', JSON.stringify(userData));
+
+        setUploadProgress(100);
+        console.log('User onboarding completed, data saved to localStorage');
         await setDoc(userDocRef, {
           username: username.trim(),
           gender,
