@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useAnalytics } from "./hooks/useAnalytics";
+// Analytics temporarily removed
 
 import VideoChat from "./screens/VideoChat";
 import SplashScreen from "./components/SplashScreen";
